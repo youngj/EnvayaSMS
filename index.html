@@ -3,21 +3,39 @@
 <head>
   <meta charset='utf-8'>
 
-  <title>youngj/KalSMS @ GitHub</title>
+  <title>KalSMS</title>
 
   <style type="text/css">
     body {
       margin-top: 1.0em;
-      background-color: #98740f;
+      background-color: #fff;
       font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #ffffff;
+      color: #333;
     }
+    
+    .comparison_table
+    {
+        font-size:12px;
+    }
+    .comparison_table tbody th
+    {
+        text-align:right;
+    }
+    .comparison_table tbody td
+    {
+        border:1px solid #ccc;
+    }
+    .comparison_table ul
+    {
+
+    }
+    
     #container {
       margin: 0 auto;
       width: 700px;
     }
     h1 { font-size: 3.8em; color: #678bf0; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
+    h1 .small { font-size: 0.4em; color:#666; }
     h1 a { text-decoration: none }
     h2 { font-size: 1.5em; color: #678bf0; }
     h3 { text-align: center; color: #678bf0; }
@@ -35,37 +53,151 @@
 
   <div id="container">
 
-    <div class="download">
-      <a href="http://github.com/youngj/KalSMS/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/youngj/KalSMS/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
-    </div>
-
+      
     <h1><a href="http://github.com/youngj/KalSMS">KalSMS</a>
-      <span class="small">by <a href="http://github.com/youngj">youngj</a></span></h1>
+    
+    <span class="small">
+      SMS/MMS gateway for Android
+    </span>
+    </h1>
+    
+    <h2>About</h2>
 
-    <div class="description">
-      SImple SMS gateway running on Android
-    </div>
-
-    <h2>Authors</h2>
-<p>Nir Yariv (niryariv@gmail.com)<br/>Jesse Young (youngj@envaya.org)<br/><br/>      </p>
-<h2>Contact</h2>
-<p>Jesse Young (adunar@gmail.com)<br/>      </p>
-
-
-    <h2>Download</h2>
     <p>
-      You can download this project in either
-      <a href="http://github.com/youngj/KalSMS/zipball/master">zip</a> or
-      <a href="http://github.com/youngj/KalSMS/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/youngj/KalSMS</pre>
+    <div style='float:right;padding-left:10px;padding-bottom:10px'>    
+    <img src='screenshot-main.png' width='213' height='350' />  
+    <br />
+    <img src='screenshot-settings.png' width='211' height='350' />
+
+    </div>
+        KalSMS is a SMS/MMS gateway running entirely as an Android app.
+
+    <p>
+        It enables web services to send and receive SMS/MMS messages
+        by forwarding incoming messages to a server on the Internet, and sending 
+        outgoing messages to other phones.
     </p>
 
+<p>
+People with any type of mobile phone can send SMS/MMS to a phone
+running KalSMS, without needing their own Android phone.
+</p>
+
+<p>
+It works wherever the phone can receive SMS messages and access the Internet 
+(via Wi-Fi or mobile data connection).
+</p>
+
+<h2>Why KalSMS?</h2>   
+    
+<p>
+    KalSMS can be used nearly anywhere in the world. In particular, it is useful 
+    in countries where obtaining a local virtual phone number 
+    or SMS shortcode is difficult, expensive, or impossible. A phone running KalSMS 
+    connects to the phone network in the same way as any other mobile phone, 
+    so it can be set up without needing approval from anyone else.
+</p>
+
+<p>
+    KalSMS is designed to to be maintainable even when deployed in remote locations 
+    that cannot easily be accessed by your organization's technical staff. KalSMS is simple
+    enough for non-technical users to do all setup and maintenance of deployed phones.
+</p>
+
+
+<h2>Price</h2>
+<p>
+    The KalSMS app itself is free to install on as many phones as you'd like.
+</p>
+<p>
+In order to deploy KalSMS, the only monetary costs are the cost of a messaging 
+plan for your phone, and the price of the phone itself. KalSMS is compatible with 
+many old or inexpensive Android phones, e.g. the LG GT540, currently $120 on Amazon.com.
+</p>
+    
+<p>
+    Typically your organization will need only one phone running KalSMS in a 
+    particular country, although you could have multiple phones to load-balance requests 
+    for higher throughput, to offer different user services, or to serve different mobile networks.
+</p>
+    
+<h2>Comparison to Alternative Methods</h2>
+<p> 
+    SMS gateways can be created using several alternative methods, including hosted services (e.g. Twilio, Tropo, Clickatell),    
+    connecting GSM phones/modems to a computer (e.g. FrontlineSMS, RapidSMS, Kannel),
+    and partnering directly with mobile operators.    
+</p>
+
+<table class='comparison_table'>
+    <thead> 
+    <tr>
+        <td>&nbsp;</td>
+        <th>Benefits</th>
+        <th>Drawbacks</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th>Hosted services</th>        
+        <td>
+            <ul><li>High message throughput
+            <li>Easy to deploy</ul>
+        </td>
+        <td>
+            <ul><li>No local numbers in many countries
+            <li>Usually no MMS support</ul>
+        </td>
+    </tr>
+    <tr>
+        <th>Connecting modem<br /> to computer</th>        
+        <td>
+            <ul><li>Can work with inexpensive phone</li></ul>
+        </td>
+        <td>
+            <ul><li>Expensive hardware costs
+            <li>Lots of moving parts to keep working
+            <li>Very difficult for non-technical users to deploy
+            <li>Low message throughput
+            <li>No MMS support</ul>
+        </td>
+    </tr>    
+    <tr>
+        <th>Partnering with<br /> Mobile Operators</th>        
+        <td>
+            <ul>
+            <li>High message throughput
+            <li>Can provide free service to users via shortcode</ul>
+        </td>
+        <td>
+            <ul><li>Usually very expensive
+            <li>Requires operator approval
+            <li>Long setup time</li></ul>
+        </td>
+    </tr>      
+    </tbody>    
+</table>
+    
+<p>
+    KalSMS is ideal for situations where no hosted services with local numbers are available in 
+    a particular country, or when it is necessary to receive MMS messages. KalSMS likelly has
+    lower throughput than hosted services or partnering with mobile operators, but should 
+    be able to forward up to a few thousand messages per phone per day.
+</p>
+    
+<h2>Contributors</h2>
+<p>
+    Jesse Young (youngj@envaya.org) - Current Maintainer<br />
+    Nir Yariv (niryariv@gmail.com) - Initial Developer
+</p>    
+    <h2>Download</h2>
+    
+    <ul>
+        <li><a href="http://envaya.org/_media/KalSMS-release.apk">Current release (apk)</a></li>        
+        <li><a href="http://github.com/youngj/KalSMS/zipball/master">Latest development source (zip)</a></li>
+        <li><a href="http://github.com/youngj/KalSMS/tarball/master">Latest development source (tar)</a></li>
+    </ul>
+    
+    
     <div class="footer">
       get the source code on GitHub : <a href="http://github.com/youngj/KalSMS">youngj/KalSMS</a>
     </div>
