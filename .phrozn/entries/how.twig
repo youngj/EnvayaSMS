@@ -1,3 +1,75 @@
 <h2>How it Works</h2>
 
-<p>TODO</p>
+<p>
+In the simplest configuration, KalSMS only needs to be installed on one phone. 
+Suppose that you have installed KalSMS on an Android phone in Dar es Salaam, 
+Tanzania, with phone number <code>+255987654321</code> (local number <code>0987654321</code>), 
+with GSM service from Zantel.
+</p>
+
+<p>
+Suppose also that your web server is <code>example.com</code>, and its servers are located in London.
+</p>
+
+<p>
+In Dar es Salaam, you would put the Android phone in an office with internet access and a Wi-Fi router,
+and connect the phone to the Wi-Fi network. (Wi-Fi is not strictly necessary, since KalSMS will also
+work over the phone's mobile data connection, but Wi-Fi is likely to be more reliable and cheaper.)
+</p>
+
+<p>
+Then your network would look like this:
+</p>
+
+<p>
+TODO
+</p>
+
+<p>
+    Typically your organization will need only one phone running KalSMS in a 
+    particular country. However, it is possible to use multiple phones to load-balance requests 
+    for higher throughput, to offer different user services, or to serve different mobile networks.
+</p>
+
+<h3>Receiving incoming SMS and sending replies</h3>
+
+<p>Here is an example of how KalSMS would forward an incoming SMS to your server, and send a SMS back as a reply:</p>
+
+<ol>
+<li>User in Tanzania, using Nokia phone with phone number <code>0555551234</code>, sends SMS message to <code>0987654321</code></li>
+<li>Your Android phone at <code>0987654321</code> receives SMS</li>
+<li>KalSMS sends SMS to <code>example.com</code> via HTTP</li>
+<li>example.com processes the message and returns SMS reply in HTTP response</li>
+<li>KalSMS forwards SMS reply to <code>0555551234</code></li>
+</ol>
+
+<p>
+Since users generally are charged only for outgoing messages in Tanzania, the user would be charged
+for sending one local SMS message, and your phone would also be charged for sending one local SMS message.
+</p>
+
+<h3>Sending outgoing SMS notifications</h3>
+
+<p>KalSMS uses a different process to send SMS notifications that were not in response to an incoming message.</p>
+
+<p>Assume now that <code>example.com</code> has multiple phones using KalSMS in different countries, 
+and it is configured to send all messages to phone numbers with a <code>255</code> prefix (Tanzania's country code) 
+via the cell phone with number <code>+255987654321</code>.
+
+<ol>
+    <li><code>example.com</code> wants to send an SMS message to <code>+255555551234</code></li>
+    <li><code>example.com</code> identifies that the recipient number has a <code>255</code>
+        prefix, and chooses sender phone number <code>+255987654321</code></li>
+    <li>The next time KalSMS polls <code>example.com</code> for queued outgoing messages 
+        for its phone number <code>+255987654321</code>, the server responds with 
+        the message to send
+    </li>
+    <li>KalSMS forwards the message to <code>0555551234</code></li>
+    <li>KalSMS notifies <code>example.com</code> via HTTP that message was sent</li>
+    <li><code>example.com</code> removes the SMS message from its queue of outgoing messages.</li>
+</ol>
+
+<p>
+In these examples, even though SMS messages are being communicated between Dar es Salaam and London,
+all SMS messages are sent domestically and are not charged as international SMS messages.
+</p>
