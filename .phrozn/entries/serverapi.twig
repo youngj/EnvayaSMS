@@ -21,8 +21,57 @@ We encourage you to contribute new libraries and example code back to the KalSMS
 HTTP Request Format
 </h3>
 
+<h4>Example requests</h4>
+
+<p>An incoming SMS from <code>6505551234</code> with message body "test":</p>
+
+<pre>
+POST /sg/kalsms HTTP/1.1
+X-Kalsms-Signature: sAemG31uRllk/K9xck2WRNaF/WI=
+Content-Length: 96
+Content-Type: application/x-www-form-urlencoded
+Host: 192.168.70.1:3000
+Connection: Keep-Alive
+
+from=6505551234&message_type=sms&message=test&version=2&phone_number=16505551212&action=incoming
+</pre>
+
+<p>An incoming MMS message:</p>
+
+<pre>
+TODO
+</pre>
+
+<p>Checking for outgoing SMS messages:</p>
+
+<pre>
+POST /sg/kalsms HTTP/1.1
+X-Kalsms-Signature: 139CL71b7r1Zw/E2wcccWFviSlg=
+Content-Length: 50
+Content-Type: application/x-www-form-urlencoded
+Host: 192.168.70.1:3000
+Connection: Keep-Alive
+
+action=outgoing&version=2&phone_number=16505551212
+</pre>
+
+<p>Notifying the server of the status of a sent message:</p>
+
+<pre>
+POST /sg/kalsms HTTP/1.1
+X-Kalsms-Signature: 6uJtI6+QqlVBbUsR4T0WsQomods=
+Content-Length: 80
+Content-Type: application/x-www-form-urlencoded
+Host: 192.168.70.1:3000
+Connection: Keep-Alive
+
+id=1536&status=sent&error=&action=send_status&version=2&phone_number=16505551212
+</pre>
+
+<h4>Specification</h4>
+
 <p>
-The following parameters are sent by all POST requests from KalSMS:
+The following parameters are sent in all POST requests from KalSMS:
 </p>
 
 <dl>
@@ -192,51 +241,6 @@ Additional parameters sent in POST requests with action=send_status:
     </dd>
 </dl>
 
-Example request for incoming SMS message:
-
-<pre>
-POST /sg/kalsms HTTP/1.1
-X-Kalsms-Signature: sAemG31uRllk/K9xck2WRNaF/WI=
-Content-Length: 96
-Content-Type: application/x-www-form-urlencoded
-Host: 192.168.70.1:3000
-Connection: Keep-Alive
-
-from=6505551234&message_type=sms&message=test&version=2&phone_number=16505551212&action=incoming
-</pre>
-
-Example request for incoming MMS message:
-
-<pre>
-TODO
-</pre>
-
-Example request for checking for outgoing SMS messages:
-
-<pre>
-POST /sg/kalsms HTTP/1.1
-X-Kalsms-Signature: 139CL71b7r1Zw/E2wcccWFviSlg=
-Content-Length: 50
-Content-Type: application/x-www-form-urlencoded
-Host: 192.168.70.1:3000
-Connection: Keep-Alive
-
-action=outgoing&version=2&phone_number=16505551212
-</pre>
-
-Example request for notifying status of sent message:
-
-<pre>
-POST /sg/kalsms HTTP/1.1
-X-Kalsms-Signature: 6uJtI6+QqlVBbUsR4T0WsQomods=
-Content-Length: 80
-Content-Type: application/x-www-form-urlencoded
-Host: 192.168.70.1:3000
-Connection: Keep-Alive
-
-id=1536&status=sent&error=&action=send_status&version=2&phone_number=16505551212
-</pre>
-
 <h3>
 HTTP Response Format
 </h4>
@@ -247,10 +251,25 @@ If the signature check failed, the server should return status code 403.
 Other status codes may be used to signify errors.
 </p>
     
-HTTP response format for action=incoming and action=outgoing:
-<blockquote>
-The Content-Type header should be text/xml, with the content as follows:
+<h4>HTTP response for action=incoming and action=outgoing</h4>
 
+Example:
+<pre>
+HTTP/1.1 200 OK
+Content-Type: text/xml
+Content-Length: 189
+
+&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;messages&gt;
+  &lt;sms id='1540' to='16505551213'&gt;This is a test&lt;/sms&gt;
+  &lt;sms id='1541' to='16505551214'&gt;This is a another test message.&lt;/sms&gt;
+&lt;/messages&gt;
+</pre>
+
+Specification:
+<p>
+The Content-Type header should be text/xml, with the content as follows:
+</p>
 <dl>
     <dt>&lt;messages&gt;</dt>
     <dd>
@@ -259,6 +278,7 @@ The Content-Type header should be text/xml, with the content as follows:
         <br />
         Attributes:
         <dl><dt>none</dt></dl>
+        <br />
         Content: 
         <dl>
             <dt>&lt;sms&gt;*</dt>
@@ -283,32 +303,19 @@ The Content-Type header should be text/xml, with the content as follows:
                 sender.
             </dd>
         </dl>
+        <br />
         Content: 
         <dl>
         <dt>CDATA</dt>
         <dd>
             The content of the SMS message to send.
         </dd>
+        </dl>
     </dd>
 </dl>
-
-Example response:
-
-<pre>
-HTTP/1.1 200 OK
-Content-Type: text/xml
-Content-Length: 189
-
-&lt;?xml version='1.0' encoding='UTF-8'?&gt;
-&lt;messages&gt;
-  &lt;sms id='1540' to='16505551213'&gt;This is a test&lt;/sms&gt;
-  &lt;sms id='1541' to='16505551214'&gt;This is a another test message.&lt;/sms&gt;
-&lt;/messages&gt;
-</pre>
-</blockquote>
         
-Response format for action=send_status:        
+<h4>HTTP Response for action=send_status</h4>
 
-<blockquote>
+<p>
     The response content is currently undefined and ignored. 
-</blockquote>
+</p>
