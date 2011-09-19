@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>KalSMS</title>
+  <link rel='stylesheet' type='text/css' href='styles/site.css' />
+</head>
+
+<body>
+  <a href="http://github.com/youngj/KalSMS"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+
+  <div id="container">
+
+    <h1><a href="index.html">KalSMS</a>
+    
+    <span class="small">
+      SMS/MMS gateway for Android
+    </span>
+    </h1>      
+    
+    <div class='menu'>
+        <a href='index.html'>Home</a>
+        &middot;
+        <a href='install.html'>Install</a>
+        &middot;
+        <a href='how.html'>How it Works</a>
+        &middot;
+        <a href='serverapi.html'>API Reference</a>
+        &middot;
+        <a href='comparison.html'>Comparison</a>        
+        &middot;
+        <a href='history.html'>History</a>                
+    </div>
+  
+    <h2>History</h2>
+
+Version 2.0-beta (2011/09/18)
+
+<ul>
+    <li>
+        Enable sending more than Android's limit of 100 messages/app/hour via expansion packs
+    </li>
+    <li>
+        Forward incoming MMS messages to server
+    </li>
+    <li>
+        Server API changed to use POST requests instead of GET requests, and other changes; 
+        support for future server API changes via 'version' request parameter
+    </li>        
+    <li>
+        Authenticate with password shared between phone and server
+    </li>
+    <li>
+        Retry forwarding messages after a delay if there is an error 
+        (e.g. due to temporarily broken internet or GSM connection)
+    </li>
+    <li>
+        Notify server of the status of outgoing messages
+    </li>
+    <li>
+        Support multiple phones connecting to same server 
+    </li>
+    <li>
+        Show log messages to user to facilitate troubleshooting
+    </li>
+    <li>
+        User-configurable interval to poll for new outgoing messages    
+    </li>    
+    <li>
+        Option to prevent incoming messages from being stored in Messaging inbox
+    </li>
+    <li>
+        Option to forward messages already received in Messaging inbox
+    </li>    
+    <li>
+        Option to enable/disable all SMS gateway functionality
+    </li>        
+    <li>
+        Perform all HTTP requests asynchronously for better performance
+    </li>    
+    <li>
+        Automatically start when the phone boots
+    </li>
+    <li>
+        Add server library and example code for PHP
+    </li>
+    <li>
+        Create KalSMS website
+    </li>
+</ul>
+
+Version 1a (2011/01/18)
+
+<ul>
+    <li>
+        Option to poll server for outgoing messages once per hour
+    </li>
+</ul>
+
+Version 1 (2010/10/04)
+
+<ul>
+    <li>
+        Initial release with support for receiving incoming SMS and sending replies
+    </li>
+</ul>
+    
+    <div class="footer">
+      get the source code on GitHub : <a href="http://github.com/youngj/KalSMS">youngj/KalSMS</a>
+    </div>
+
+  </div>
+  
+</body>
+</html>
