@@ -55,7 +55,9 @@ h3 { color: #678bf0; }
 a { color: #678bf0; }
 .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
 .download { float: right; }
-pre { background: #000; color: #fff; padding: 15px;}
+pre { 
+    background: #eee; color: #333; padding: 5px;
+}
 hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
 .footer { text-align:center; padding-top:30px; font-style: italic; }
 
