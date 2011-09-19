@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>KalSMS</title>
+  <link rel='stylesheet' type='text/css' href='styles/site.css' />
+</head>
+
+<body>
+  <a href="http://github.com/youngj/KalSMS"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+
+  <div id="container">
+
+    <h1><a href="index.html">KalSMS</a>
+    
+    <span class="small">
+      SMS/MMS gateway for Android
+    </span>
+    </h1>      
+    
+    <div class='menu'>
+        <a href='index.html'>Home</a>
+        &middot;
+        <a href='install.html'>Install</a>
+        &middot;
+        <a href='how.html'>How it Works</a>
+        &middot;
+        <a href='serverapi.html'>API Reference</a>
+        &middot;
+        <a href='comparison.html'>Comparison</a>        
+    </div>
+  
+    <h2>Comparison to Alternative Methods</h2>
+<p> 
+    SMS gateways can be created using several alternative methods, including hosted services (e.g. Twilio, Tropo, Clickatell),    
+    connecting GSM phones/modems to a computer (e.g. FrontlineSMS, RapidSMS, Kannel),
+    and partnering directly with mobile operators.    
+</p>
+
+<table class='comparison_table'>
+    <thead> 
+    <tr>
+        <td>&nbsp;</td>
+        <th>Benefits</th>
+        <th>Drawbacks</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th>Hosted services</th>        
+        <td>
+            <ul><li>High message throughput
+            <li>Easy to deploy</ul>
+        </td>
+        <td>
+            <ul><li>No local numbers in many countries
+            <li>Usually no MMS support</ul>
+        </td>
+    </tr>
+    <tr>
+        <th>Connecting modem<br /> to computer</th>        
+        <td>
+            <ul><li>Can work with inexpensive phone</li></ul>
+        </td>
+        <td>
+            <ul><li>Expensive hardware costs
+            <li>Lots of moving parts to keep working
+            <li>Very difficult for non-technical users to deploy
+            <li>Low message throughput
+            <li>No MMS support</ul>
+        </td>
+    </tr>    
+    <tr>
+        <th>Partnering with<br /> Mobile Operators</th>        
+        <td>
+            <ul>
+            <li>High message throughput
+            <li>Can provide free service to users via shortcode</ul>
+        </td>
+        <td>
+            <ul><li>Usually very expensive
+            <li>Requires operator approval
+            <li>Long setup time</li></ul>
+        </td>
+    </tr>      
+    </tbody>    
+</table>
+    
+<p>
+    KalSMS is ideal for situations where no hosted services with local numbers are available in 
+    a particular country, or when it is necessary to receive MMS messages. 
+</p>
+<p>
+    KalSMS likely has lower throughput than hosted services or partnering with mobile operators, but should 
+    be able to forward up to a few thousand messages per phone per day.
+</p>
+    
+    <div class="footer">
+      get the source code on GitHub : <a href="http://github.com/youngj/KalSMS">youngj/KalSMS</a>
+    </div>
+
+  </div>
+  
+</body>
+</html>

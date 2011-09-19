@@ -1,0 +1,265 @@
+layout: default.twig
+---
+<h2>Server API Reference</h2>
+
+<p>
+KalSMS communicates with the server via HTTP POST requests that expect an XML response.
+</p>
+
+<p>
+For convenience, KalSMS includes <a href='https://github.com/youngj/KalSMS/tree/master/server'>server libraries and example code</a>
+ for certain languages to simplify handling its POST requests and generating response XML.  
+</p>
+
+<p>
+If a server library is not yet available for your programming language, you can still use
+KalSMS by implementing code in accordance with the API reference below. 
+We encourage you to contribute new libraries and example code back to the KalSMS project!
+</p>
+
+<h3>
+HTTP Request Format
+</h3>
+
+<p>
+The following parameters are sent by all POST requests from KalSMS:
+</p>
+
+<dl>
+    <dt>"version" ::= &lt;integer&gt;</dt>
+    <dd>
+        The API version of the POST requests (currently <code>"2"</code>).
+        <br />
+        <br />
+        This number will be incremented whenever the format of POST requests changes significantly.         
+        This allows the server to support phones running different API versions at the same time.
+        If a deployment has many phones running with KalSMS, the server should update its code first,
+        then the phones can be upgraded to the new version of KalSMS as convenient.
+    </dd>
+
+    <dt>"phone_number" ::= &lt;text&gt;</dt>
+    <dd>
+        The phone number of the phone running KalSMS, as entered under Menu &gt; Settings.
+        <br /><br />
+        This allows the server to differentiate between KalSMS clients if multiple phones
+        are running KalSMS.
+    </dd>
+        
+    <dt>"action" ::= "outgoing" | "incoming" | "send_status"</dt>
+    <dd>
+        The request action determines the purpose of the HTTP request:
+        
+        <dl>
+        <dt>"outgoing":</dt>
+        <dd>
+            Poll the server for outgoing messages
+        </dd>
+        
+        <dt>"incoming":</dt>
+        <dd>
+            Forward an incoming SMS or MMS message to the server
+        </dd>
+            
+          
+        <dt>"send_status":</dt>
+        <dd>
+            Update the server on the status of sending an outgoing message
+        </dd>
+        </dl>        
+            
+        The other POST parameters sent depend on the request action.
+    </dd>
+</dl>
+       
+The following HTTP Headers are sent in all POST requests from KalSMS:
+
+<dl>
+    <dt>"X-Kalsms-Signature" ::= &lt;text&gt;</dt>
+    <dd>
+        A signature of the request to verify the phone and the server share the same password
+        (though it doesn't protect against MITM snooping or replay attacks).
+        <br />
+        <br />
+        The signature is calculated by the following algorithm:
+            
+        <ol>
+            <li>Sort all POST parameters (not including file uploads) 
+                in alphabetical order by the name of the field.</li>
+                
+            <li>Generate an input string by concatenating:
+                <ul>
+                    <li>the server URL,</li>
+                    <li>each of the sorted POST parameters with their corresponding values, and</li>
+                    <li>the password,</li>
+                </ul>
+                with a comma in between each element, like so:
+                <br /><br />
+                <code>"&lt;serverURL&gt;,&lt;name1&gt;,&lt;value1&gt;,&lt;...&gt;,&lt;nameN&gt;,&lt;valueN&gt;,&lt;password&gt;"</code>
+            </li>
+                                    
+            <li>Generate the SHA-1 hash of the input string in UTF-8</li>
+            
+            <li>Encode the SHA-1 hash using Base64 with no line breaks.</li>
+        </ol>
+   </dd>
+</dl>
+
+Additional parameters sent in POST requests with action=incoming:
+   
+<dl>
+    <dt>"from" ::= &lt;text&gt;</dt>
+    <dd>
+        The phone number of the message sender.
+    </dd>
+        
+    <dt>"message_type" ::= "sms" | "mms"</dt>
+    <dd>
+        Whether this message is an SMS or MMS.
+    </dd>
+
+    <dt>"message" ::= &lt;text&gt;</dt>
+    <dd>
+        The message body of the SMS, or the content of the <code>text/plain</code> part of the MMS.
+    </dd>
+</dl>
+        
+Additional parameters sent in POST requests with action=incoming and message_type=mms:
+    
+<dl>
+    <dt>"mms_parts" ::= &lt;json_array&gt;</dt>
+    <dd>
+        Metadata for each part of the MMS. Each item in the JSON array is an object
+        with the following keys and values:
+    
+        <dl>
+        <dt>"name" ::= &lt;text&gt;</dt>
+        <dd>
+            The name of an additional form field where the content of the MMS part
+            is sent as an attached file.
+        </dd>
+        
+        <dt>"cid" ::= &lt;text&gt;</dt>
+        <dd>
+            The Content ID of the MMS part. This allows the server to resolve 
+            references in the SMIL part of the MMS 
+            (e.g. <code>&lt;img region="Image" src="cid:805"/&gt;</code>).
+        </dt>
+            
+        <dt>"type" ::= "application/smil" | "text/plain" | "image/jpeg" | ...</dt>
+        <dd>
+            The Content Type of the MMS part. 
+        </dd>
+        
+        <dt>"filename" ::= &lt;text&gt;</dt>
+        <dd>
+            The filename of the MMS part, as sent by the sender phone, 
+            e.g. <code>"Image001.jpg"</code>.
+        </dt>
+    </dl>
+        
+    (Additional fields with the content of each MMS part. Text parts
+    are encoded in UTF-8.)
+    </dt>
+</dl>
+    
+Additional parameters sent in POST requests with action=outgoing:
+
+<dl>
+<dt>
+    (None)
+</dt>
+</dl>
+        
+Additional parameters sent in POST requests with action=send_status:
+
+<dl>
+    <dt>"id" ::= &lt;text&gt;</dt>
+    <dd>
+        The Server's ID for the outgoing message (from the <code>id</code> attribute
+        of an <a href='#sms'>sms</a> tag in a previous XML response from the server).
+    </dd>
+
+    <dt>"status" ::= "queued" | "failed" | "sent"</dt>
+    <dd>
+        The current status of the outgoing message.
+    </dd>
+        
+    <dt>"error" ::= &lt;text&gt;</dt>
+    <dd>
+        A description of the reason for the error, if the message 
+        failed to send; or, an empty string if the message
+        has been sent successfully.
+    </dd>
+</dl>
+
+<h3>
+HTTP Response Format
+</h4>
+     
+<p>     
+For a successul request, the server should return HTTP status code 200.
+If the signature check failed, the server should return status code 403.
+Other status codes may be used to signify errors.
+</p>
+    
+HTTP response format for action=incoming and action=outgoing:
+<blockquote>
+The Content-Type header should be text/xml, with the content as follows:
+
+<dl>
+    <dt>&lt;messages&gt;</dt>
+    <dd>
+        The root XML element.
+        <br />
+        <br />
+        Attributes:
+        <dl><dt>none</dt></dl>
+        Content: 
+        <dl>
+            <dt>&lt;sms&gt;*</dt>
+            <dd>The SMS messages to send.</dd>
+        </dl>
+    </dd>
+    <dt id='sms'>&lt;sms&gt;</dt>
+    <dd>
+        Describes an outgoing SMS to send.
+        <br /><br />
+        Attributes:
+        <dl>
+            <dt>"id" ::= &lt;text&gt; (optional)</dt>
+            <dd>
+                An ID for this outgoing message. (KalSMS will send this 
+                back to the server as the id field in a send_status request.)
+            </dd>
+            <dt>"to" ::= &lt;text&gt; (optional for incoming, required for outgoing)</dt>
+            <dd>
+                The phone number to send the SMS to. If omitted for 
+                action=incoming, it will be sent as a reply to the original
+                sender.
+            </dd>
+        </dl>
+        Content: 
+        <dl>
+        <dt>CDATA</dt>
+        <dd>
+            The content of the SMS message to send.
+        </dd>
+    </dd>
+</dl>
+
+Example:
+
+<pre>
+    &lt;?xml version='1.0' encoding='UTF-8'?&gt;
+    &lt;messages&gt;
+        &lt;sms id='42' to='5551212'&gt;Message One&lt;/sms&gt;
+        &lt;sms&gt;Message Two&lt;/sms&gt;
+    &lt;/message&gt;
+</pre>
+</blockquote>
+        
+Response format for action=send_status:        
+
+<blockquote>
+    The response content is currently undefined and ignored. 
+</blockquote>

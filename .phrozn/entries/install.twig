@@ -1,0 +1,110 @@
+layout: default.twig
+---
+<h2>Installing KalSMS</h2>
+
+Before installing KalSMS, ensure that you have the following prerequisites:
+
+<ul>
+    <li>One or more Android phones (1.6 Donut or higher) that are
+    registered on a mobile network. </li>
+    <li>A way for the phones to connect to the internet, either via Wi-Fi
+    or the mobile data service. <br  />
+    (Even if using Wi-Fi, mobile data 
+    service is necessary to receive MMS messages.)    </li>
+    <li> A web server accessible from the public internet </li>
+</ul>
+
+To install the current release version of KalSMS on an Android phone, 
+either scan the barcode below with a QR code app, 
+or click the link from your phone's browser. <br />
+
+<div style='text-align:center'>
+<img src='media/qr.png' width='175' height='175' style='vertical-align:middle' /> 
+&nbsp; &nbsp; <em>or</em> &nbsp; &nbsp; 
+<span style='font-size:20px;font-weight:bold'>
+<a href="http://envaya.org/_media/KalSMS-release.apk">Install KalSMS</a>
+</span>
+
+</div>
+
+<p>
+Alternatively, software developers may <a href="https://github.com/youngj/KalSMS">download the source code from GitHub</a>
+and build KalSMS themselves.
+</p>
+
+<h2>Configuring KalSMS</h2>
+
+<h3>Server Configuration</h3>
+
+<p>
+It is assumed that you or your organization already has a HTTP server that you want to connect to KalSMS.
+</p>
+
+<p>
+Follow the instructions in the <a href='serverapi.html'>API Reference</a> page to learn how to construct a 
+resource on your HTTP server that can communicate with KalSMS.
+</p>
+
+<h3>Phone Configuration</h3>
+
+<p>
+After your server is configured, configure KalSMS on your phone to connect to your server as follows:
+</p>
+
+<ol>
+
+<li>Open the KalSMS app</li>
+<li>Click the Menu button, then "Settings"</li>
+<li>Configure KalSMS to work with your server by entering:</li>
+        <ul>
+            <li>your server URL (including <code>http://</code> or <code>https://</code>)</li>
+            <li>your phone number</li>
+            <li>the password shared with the server</li>
+        </ul>
+<li>Choose an interval to poll for new outgoing messages</li>
+<li>Check "Enable KalSMS?"</li>
+<li>Click the Back button to return to the main screen</li>
+</ol>
+
+<p>
+To test if KalSMS has been configured properly and can connect
+to your server, open the KalSMS app, click the Menu button, 
+then click "Test Connection".
+</p>
+
+
+<p>Finally, prevent Wi-Fi from turning off when the phone sleeps, by 
+    going to Settings > Wireless & Networks > Wi-Fi settings >
+    Menu key > Advanced > Wi-Fi sleep policy and select "Never".
+    (Otherwise, you will get connection timeout errors when forwarding
+    messages after the phone goes to sleep.)
+    </p>
+
+
+<p>
+<strong>Important:</strong> After KalSMS is enabled, it will forward all SMS messages regardless of whether the
+KalSMS app is open. If you want to use SMS normally again, return to KalSMS' settings screen
+and uncheck "Enable KalSMS?".
+</p>
+
+<h3>Installing Expansion Packs</h3>
+
+<p>
+    By default, Android prevents KalSMS from sending more than 100 outgoing SMS messages per hour. 
+    However, that limit can be increased by installing KalSMS Expansion Packs.
+</p>
+<p>
+    Each Expansion Pack allows KalSMS to increase its sending limit by an additional 100 outgoing SMS messages
+    per hour. For example, if you install 14 expansion packs, KalSMS will be able to send up to 1500 outgoing SMS messages
+    per hour.
+</p>
+<p>
+    (TODO: Link to Expansion Pack installers)
+</p>
+<p>
+    With Expansion Packs, KalSMS is limited only by how fast your phone can send and receive SMS, 
+    and by your mobile provider's usage limits and terms of service.
+</p>
+<p>
+
+</p>
