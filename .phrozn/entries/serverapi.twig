@@ -24,7 +24,7 @@ HTTP Request Format
 <h4>Example requests</h4>
 
 <p>
-    In each of the example requests below, the Server URL is set as <code>http://192.168.70.1:3000/sg/kalsms</code>,
+    In each of the example requests below, the Server URL is <code style='white-space:nowrap'>http://192.168.70.1:3000/sg/kalsms</code>
     and the phone number of the phone with KalSMS is <code>16505551212</code>.
 </p>
 
@@ -321,6 +321,16 @@ The Content-Type header should be text/xml, with the content as follows:
         
 <h4>HTTP Response for action=send_status</h4>
 
+Example:
+<pre>
+HTTP/1.1 200 OK
+Content-Type: text/plain
+Content-Length: 2
+
+OK
+</pre>
+
 <p>
-    The response content is currently undefined and ignored. 
+    The response content for <code>send_status</code> requests is currently undefined and ignored.
+    HTTP status code 200 signifies success, and anything else signifies failure.
 </p>
