@@ -62,6 +62,9 @@ After your server is configured, configure KalSMS on your phone to connect to yo
             <li>the password shared with the server</li>
         </ul>
 <li>Choose an interval to poll for new outgoing messages</li>
+<li><em>Recommended:</em> under Wi-Fi sleep policy, select "always stay connected".
+    (Otherwise, KalSMS will be unable to forward messages after the phone goes to sleep.)
+</li>
 <li>Check "Enable KalSMS?"</li>
 <li>Click the Back button to return to the main screen</li>
 </ol>
@@ -71,15 +74,6 @@ To test if KalSMS has been configured properly and can connect
 to your server, open the KalSMS app, click the Menu button, 
 then click "Test Connection".
 </p>
-
-
-<p>Finally, prevent Wi-Fi from turning off when the phone sleeps, by 
-    going to Settings > Wireless & Networks > Wi-Fi settings >
-    Menu key > Advanced > Wi-Fi sleep policy and select "Never".
-    (Otherwise, you will get connection timeout errors when forwarding
-    messages after the phone goes to sleep.)
-    </p>
-
 
 <p>
 <strong>Important:</strong> After KalSMS is enabled, it will forward all SMS messages regardless of whether the
