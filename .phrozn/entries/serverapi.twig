@@ -82,10 +82,11 @@ The following parameters are sent in all POST requests from KalSMS:
 <dl>
     <dt>"version" ::= &lt;integer&gt;</dt>
     <dd>
-        The API version of the POST requests (currently <code>"2"</code>).
+        KalSMS's version code. This is an integer that will be incremented whenever 
+        a new version of KalSMS is released. (It is not the same as the version name shown 
+        on the Help screen.)
         <br />
         <br />
-        This number will be incremented whenever the format of POST requests changes significantly.         
         This allows the server to support phones running different API versions at the same time.
         If a deployment has many phones running with KalSMS, the server should update its code first,
         then the phones can be upgraded to the new version of KalSMS as convenient.
@@ -130,15 +131,16 @@ The following HTTP Headers are sent in all POST requests from KalSMS:
 <dl>
     <dt>"X-Kalsms-Signature" ::= &lt;text&gt;</dt>
     <dd>
-        A signature of the request to verify the phone and the server share the same password
-        (though it doesn't protect against MITM snooping or replay attacks).
+        A signature of the request to verify the phone and the server share the same password.
+        (This doesn't protect against MITM snooping or replay attacks, so it is recommended to 
+        use the <code>https://</code> protocol.)
         <br />
         <br />
         The signature is calculated by the following algorithm:
             
         <ol>
-            <li>Sort all POST parameters (not including file uploads) 
-                in alphabetical order by the name of the field.</li>
+            <li>Sort all POST parameters, not including file uploads, 
+                by the name of the field (in the usual ASCII order).</li>
                 
             <li>Generate an input string by concatenating:
                 <ul>
