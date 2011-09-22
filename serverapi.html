@@ -73,10 +73,92 @@ Connection: Keep-Alive
 from=6505551234&message_type=sms&message=test&version=2&phone_number=16505551212&action=incoming
 </pre>
 
-<p>An incoming MMS message:</p>
+<p>An incoming MMS message with an <code>image/jpeg</code> part and a <code>text/plain</code> part with message 'Test':</p>
 
-<pre>
-TODO
+<pre style='white-space:pre-wrap'>
+POST /sg/kalsms HTTP/1.1
+X-Kalsms-Signature: OgpiQet9guVhEp+0klrONR8qGNs=
+Content-Length: 13087
+Content-Type: multipart/form-data; boundary=i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RGB6_wkjO
+Host: 192.168.70.1:3000
+Connection: Keep-Alive
+
+--i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RGB6_wkjO
+Content-Disposition: form-data; name="from"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
++16505551234
+--i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RGB6_wkjO
+Content-Disposition: form-data; name="message"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Test
+--i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RGB6_wkjO
+Content-Disposition: form-data; name="message_type"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+mms
+--i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RGB6_wkjO
+Content-Disposition: form-data; name="mms_parts"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+[{"type":"application/smil","filename":"01smil","cid":"<0000>","name":"part0"},{"type":"text/plain","filename":"Text01.txt","cid":"<569>","name":"part1"},{"type":"image/jpeg","filename":"Image0001.jpg","cid":"<570>","name":"part2"}]
+--i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RGB6_wkjO
+Content-Disposition: form-data; name="version"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+3
+--i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RGB6_wkjO
+Content-Disposition: form-data; name="phone_number"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+16505551212
+--i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RGB6_wkjO
+Content-Disposition: form-data; name="action"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+incoming
+--i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RGB6_wkjO
+Content-Disposition: form-data; name="part0"; filename="01smil"
+Content-Type: application/smil; charset=UTF-8
+Content-Transfer-Encoding: binary
+
+&lt;smil&gt;
+  &lt;head&gt;
+    &lt;layout&gt;
+      &lt;root-layout height="160" width="128"/&gt;
+      &lt;region fit="meet" height="70%" id="Image" left="0%" top="30%" width="100%"/&gt;
+      &lt;region fit="scroll" height="30%" id="Text" left="0%" top="0%" width="100%"/&gt;
+    &lt;/layout&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;par dur="8000ms"&gt;
+      &lt;text region="Text" src="cid:569"/&gt;
+      &lt;img region="Image" src="cid:570"/&gt;
+    &lt;/par&gt;
+  &lt;/body&gt;
+&lt;/smil&gt;
+
+--i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RGB6_wkjO
+Content-Disposition: form-data; name="part1"; filename="Text01.txt"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Test
+--i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RGB6_wkjO
+Content-Disposition: form-data; name="part2"; filename="Image0001.jpg"
+Content-Type: image/jpeg
+Content-Transfer-Encoding: binary
+
+<em>BINARY IMAGE DATA</em>
+--i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RGB6_wkjO--
 </pre>
 
 <p>Checking for outgoing SMS messages:</p>
@@ -245,8 +327,8 @@ Additional parameters sent in POST requests with action=incoming and message_typ
         </dt>
     </dl>
         
-    (Additional fields with the content of each MMS part. Text parts
-    are encoded in UTF-8.)
+    In addition, the request contains form fields with the content of each MMS part, 
+    with names as listed in the <code>mms_parts</code> field. Text parts are encoded in UTF-8.
     </dt>
 </dl>
     
