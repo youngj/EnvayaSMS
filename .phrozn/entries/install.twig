@@ -1,8 +1,8 @@
 layout: default.twig
 ---
-<h2>Installing KalSMS</h2>
+<h2>Installing EnvayaSMS</h2>
 
-Before installing KalSMS, ensure that you have the following prerequisites:
+Before installing EnvayaSMS, ensure that you have the following prerequisites:
 
 <ul>
     <li>One or more Android phones (1.6 Donut or higher) that are
@@ -14,7 +14,7 @@ Before installing KalSMS, ensure that you have the following prerequisites:
     <li> A web server accessible from the public internet </li>
 </ul>
 
-To install the current release version of KalSMS on an Android phone, 
+To install the current release version of EnvayaSMS on an Android phone, 
 either scan the barcode below with a QR code app, 
 or click the link from your phone's browser. <br />
 
@@ -22,17 +22,17 @@ or click the link from your phone's browser. <br />
 <img src='media/qr.png' width='175' height='175' style='vertical-align:middle' /> 
 &nbsp; &nbsp; <em>or</em> &nbsp; &nbsp; 
 <span style='font-size:20px;font-weight:bold'>
-<a href="https://github.com/downloads/youngj/KalSMS/kalsms.apk">Install KalSMS</a>
+<a href="https://github.com/downloads/youngj/EnvayaSMS/envayasms.apk">Install EnvayaSMS</a>
 </span>
 
 </div>
 
 <p>
-Alternatively, software developers may <a href="https://github.com/youngj/KalSMS">download the source code from GitHub</a>
-and build KalSMS themselves.
+Alternatively, software developers may <a href="https://github.com/youngj/EnvayaSMS">download the source code from GitHub</a>
+and build EnvayaSMS themselves.
 </p>
 
-<h2>Configuring KalSMS</h2>
+<h2>Configuring EnvayaSMS</h2>
 
 <h3>Server Configuration</h3>
 
@@ -42,7 +42,7 @@ It is assumed that your organization already has an HTTP server, or has the tech
 
 <p>
 Follow the instructions in the <a href='serverapi.html'>API Reference</a> page to learn how to construct a 
-resource on your HTTP server that can communicate with KalSMS.
+resource on your HTTP server that can communicate with EnvayaSMS.
 </p>
 
 <h3>Phone Configuration</h3>
@@ -53,14 +53,14 @@ resource on your HTTP server that can communicate with KalSMS.
 
 
 <p>
-After your server is configured, configure KalSMS on your phone to connect to your server as follows:
+After your server is configured, configure EnvayaSMS on your phone to connect to your server as follows:
 </p>
 
 <ol>
 
-<li>Open the KalSMS app</li>
+<li>Open the EnvayaSMS app</li>
 <li>Click the Menu button, then "Settings"</li>
-<li>Configure KalSMS to work with your server by entering:</li>
+<li>Configure EnvayaSMS to work with your server by entering:</li>
         <ul>
             <li>your server URL</li>
             <li>your phone number</li>
@@ -68,41 +68,40 @@ After your server is configured, configure KalSMS on your phone to connect to yo
         </ul>
 <li>Choose an interval to poll for new outgoing messages</li>
 <li><em>Recommended:</em> under Wi-Fi sleep policy, select "always stay connected".
-    (Otherwise, KalSMS will be unable to forward messages after the phone goes to sleep.)
+    (Otherwise, EnvayaSMS will be unable to forward messages after the phone goes to sleep.)
 </li>
-<li>Check "Enable KalSMS"</li>
+<li>Check "Enable EnvayaSMS"</li>
 <li>Click the Back button to return to the main screen</li>
 </ol>
 
 <p>
-To test if KalSMS has been configured properly and can connect
-to your server, open the KalSMS app, click the Menu button, 
+To test if EnvayaSMS has been configured properly and can connect
+to your server, open the EnvayaSMS app, click the Menu button, 
 then click "Test Connection".
 </p>
 
 <p>
-<strong>Important:</strong> After KalSMS is enabled, it will forward all SMS messages regardless of whether the
-KalSMS app is open. If you want to use SMS normally again, return to KalSMS' settings screen
-and uncheck "Enable KalSMS". 
+<strong>Important:</strong> After EnvayaSMS is enabled, it will forward all SMS messages regardless of whether the
+EnvayaSMS app is open. If you want to use SMS normally again, return to EnvayaSMS' settings screen
+and uncheck "Enable EnvayaSMS". 
 </p>
 
 <h3>Installing Expansion Packs</h3>
 
 <p>
-    By default, Android prevents KalSMS from sending more than 100 outgoing SMS messages per hour. 
-    However, that limit can be increased by installing KalSMS Expansion Packs.
+    By default, Android prevents EnvayaSMS from sending more than 100 outgoing SMS messages per hour. 
+    However, that limit can be increased by installing EnvayaSMS Expansion Packs.
 </p>
 <p>
-    Each Expansion Pack allows KalSMS to increase its sending limit by an additional 100 outgoing SMS messages
-    per hour. For example, if you install 14 expansion packs, KalSMS will be able to send up to 1500 outgoing SMS messages
+    Each Expansion Pack allows EnvayaSMS to increase its sending limit by an additional 100 outgoing SMS messages
+    per hour. For example, if you install 14 expansion packs, EnvayaSMS will be able to send up to 1500 outgoing SMS messages
     per hour.
 </p>
 <p>
-    <a href='http://envaya.org/_media/kalsms-pack01.apk'>KalSMS Expansion Pack 01</a><br />
-    <a href='http://envaya.org/_media/kalsms-pack02.apk'>KalSMS Expansion Pack 02</a>    
+    TODO add download links
 </p>
 <p>
-    With Expansion Packs, KalSMS is limited only by how fast your phone can send and receive SMS, 
+    With Expansion Packs, EnvayaSMS is limited only by how fast your phone can send and receive SMS, 
     and by your mobile provider's usage limits and terms of service.
 </p>
 <p>

@@ -2,23 +2,25 @@
 <html>
 <head>
   <meta charset='utf-8'>
-  <title>KalSMS</title>
+  <title>EnvayaSMS</title>
   <link rel='stylesheet' type='text/css' href='styles/site.css' />
 </head>
 
 <body>
-  <a href="http://github.com/youngj/KalSMS"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+  <a href="http://github.com/youngj/EnvayaSMS"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
 
   <div id="container">
 
-    <h1><a href="index.html">KalSMS</a>
+    <a style='float:left' href="index.html"><img src='media/icon.png' height='72' width='72' style='margin-right:10px' /></a>
+    <h1 style='padding-top:13px'><a href="index.html">EnvayaSMS</a>
     
     <span class="small">
-      SMS/MMS gateway for Android
-    </span>
+      SMS gateway for Android
+    </span>    
+    
     </h1>      
     
-    <div class='menu'>
+    <div class='menu' style='clear:both;padding-top:5px'>
         <a href='index.html'>Home</a>
         &middot;
         <a href='install.html'>Install</a>
@@ -35,18 +37,18 @@
     <h2>Server API Reference</h2>
 
 <p>
-KalSMS communicates with the server via HTTP POST requests that expect an XML response.
+EnvayaSMS communicates with the server via HTTP POST requests that expect an XML response.
 </p>
 
 <p>
-For convenience, KalSMS includes <a href='https://github.com/youngj/KalSMS/tree/master/server'>server libraries and example code</a>
+For convenience, EnvayaSMS includes <a href='https://github.com/youngj/EnvayaSMS/tree/master/server'>server libraries and example code</a>
  for certain languages to simplify handling its POST requests and generating response XML.  
 </p>
 
 <p>
 If a server library is not yet available for your programming language, you can still use
-KalSMS by implementing code in accordance with the API reference below. 
-We encourage you to contribute new libraries and example code back to the KalSMS project!
+EnvayaSMS by implementing code in accordance with the API reference below. 
+We encourage you to contribute new libraries and example code back to the EnvayaSMS project!
 </p>
 
 <h3>
@@ -56,15 +58,15 @@ HTTP Request Format
 <h4>Example requests</h4>
 
 <p>
-    In each of the example requests below, the Server URL is <code style='white-space:nowrap'>http://192.168.70.1:3000/sg/kalsms</code>
-    and the phone number of the phone with KalSMS is <code>16505551212</code>.
+    In each of the example requests below, the Server URL is <code style='white-space:nowrap'>http://192.168.70.1:3000/sg/EnvayaSMS</code>
+    and the phone number of the phone with EnvayaSMS is <code>16505551212</code>.
 </p>
 
 <p>An incoming SMS from <code>6505551234</code> with message body "test":</p>
 
 <pre>
-POST /sg/kalsms HTTP/1.1
-X-Kalsms-Signature: sAemG31uRllk/K9xck2WRNaF/WI=
+POST /sg/EnvayaSMS HTTP/1.1
+X-EnvayaSMS-Signature: sAemG31uRllk/K9xck2WRNaF/WI=
 Content-Length: 96
 Content-Type: application/x-www-form-urlencoded
 Host: 192.168.70.1:3000
@@ -76,8 +78,8 @@ from=6505551234&message_type=sms&message=test&version=2&phone_number=16505551212
 <p>An incoming MMS message with an <code>image/jpeg</code> part and a <code>text/plain</code> part with message 'Test':</p>
 
 <pre style='white-space:pre-wrap'>
-POST /sg/kalsms HTTP/1.1
-X-Kalsms-Signature: OgpiQet9guVhEp+0klrONR8qGNs=
+POST /sg/EnvayaSMS HTTP/1.1
+X-EnvayaSMS-Signature: OgpiQet9guVhEp+0klrONR8qGNs=
 Content-Length: 13087
 Content-Type: multipart/form-data; boundary=i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RGB6_wkjO
 Host: 192.168.70.1:3000
@@ -164,8 +166,8 @@ Content-Transfer-Encoding: binary
 <p>Checking for outgoing SMS messages:</p>
 
 <pre>
-POST /sg/kalsms HTTP/1.1
-X-Kalsms-Signature: 139CL71b7r1Zw/E2wcccWFviSlg=
+POST /sg/EnvayaSMS HTTP/1.1
+X-EnvayaSMS-Signature: 139CL71b7r1Zw/E2wcccWFviSlg=
 Content-Length: 50
 Content-Type: application/x-www-form-urlencoded
 Host: 192.168.70.1:3000
@@ -177,8 +179,8 @@ action=outgoing&version=2&phone_number=16505551212
 <p>Notifying the server of the status of a sent message:</p>
 
 <pre>
-POST /sg/kalsms HTTP/1.1
-X-Kalsms-Signature: 6uJtI6+QqlVBbUsR4T0WsQomods=
+POST /sg/EnvayaSMS HTTP/1.1
+X-EnvayaSMS-Signature: 6uJtI6+QqlVBbUsR4T0WsQomods=
 Content-Length: 80
 Content-Type: application/x-www-form-urlencoded
 Host: 192.168.70.1:3000
@@ -190,28 +192,28 @@ id=1536&status=sent&error=&action=send_status&version=2&phone_number=16505551212
 <h4>Specification</h4>
 
 <p>
-The following parameters are sent in all POST requests from KalSMS:
+The following parameters are sent in all POST requests from EnvayaSMS:
 </p>
 
 <dl>
     <dt>"version" ::= &lt;integer&gt;</dt>
     <dd>
-        KalSMS's version code. This is an integer that will be incremented whenever 
-        a new version of KalSMS is released. (It is not the same as the version name shown 
+        EnvayaSMS's version code. This is an integer that will be incremented whenever 
+        a new version of EnvayaSMS is released. (It is not the same as the version name shown 
         on the Help screen.)
         <br />
         <br />
         This allows the server to support phones running different API versions at the same time.
-        If a deployment has many phones running with KalSMS, the server should update its code first,
-        then the phones can be upgraded to the new version of KalSMS as convenient.
+        If a deployment has many phones running with EnvayaSMS, the server should update its code first,
+        then the phones can be upgraded to the new version of EnvayaSMS as convenient.
     </dd>
 
     <dt>"phone_number" ::= &lt;text&gt;</dt>
     <dd>
-        The phone number of the phone running KalSMS, as entered under Menu &gt; Settings.
+        The phone number of the phone running EnvayaSMS, as entered under Menu &gt; Settings.
         <br /><br />
-        This allows the server to differentiate between KalSMS clients if multiple phones
-        are running KalSMS.
+        This allows the server to differentiate between EnvayaSMS clients if multiple phones
+        are running EnvayaSMS.
     </dd>
         
     <dt>"action" ::= "outgoing" | "incoming" | "send_status"</dt>
@@ -240,10 +242,10 @@ The following parameters are sent in all POST requests from KalSMS:
     </dd>
 </dl>
        
-The following HTTP Headers are sent in all POST requests from KalSMS:
+The following HTTP Headers are sent in all POST requests from EnvayaSMS:
 
 <dl>
-    <dt>"X-Kalsms-Signature" ::= &lt;text&gt;</dt>
+    <dt>"X-EnvayaSMS-Signature" ::= &lt;text&gt;</dt>
     <dd>
         A signature of the request to verify the phone and the server share the same password.
         (This doesn't protect against MITM snooping or replay attacks, so it is recommended to 
@@ -414,7 +416,7 @@ The Content-Type header should be text/xml, with the content as follows:
         <dl>
             <dt>"id" ::= &lt;text&gt; (optional)</dt>
             <dd>
-                An ID for this outgoing message. (KalSMS will send this 
+                An ID for this outgoing message. (EnvayaSMS will send this 
                 back to the server as the id field in a send_status request.)
             </dd>
             <dt>"to" ::= &lt;text&gt; (optional for incoming, required for outgoing)</dt>
@@ -453,7 +455,7 @@ OK
 
     
     <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/youngj/KalSMS">youngj/KalSMS</a>
+      get the source code on GitHub : <a href="http://github.com/youngj/EnvayaSMS">youngj/EnvayaSMS</a>
     </div>
 
   </div>

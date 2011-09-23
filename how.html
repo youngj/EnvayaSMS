@@ -2,23 +2,25 @@
 <html>
 <head>
   <meta charset='utf-8'>
-  <title>KalSMS</title>
+  <title>EnvayaSMS</title>
   <link rel='stylesheet' type='text/css' href='styles/site.css' />
 </head>
 
 <body>
-  <a href="http://github.com/youngj/KalSMS"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+  <a href="http://github.com/youngj/EnvayaSMS"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
 
   <div id="container">
 
-    <h1><a href="index.html">KalSMS</a>
+    <a style='float:left' href="index.html"><img src='media/icon.png' height='72' width='72' style='margin-right:10px' /></a>
+    <h1 style='padding-top:13px'><a href="index.html">EnvayaSMS</a>
     
     <span class="small">
-      SMS/MMS gateway for Android
-    </span>
+      SMS gateway for Android
+    </span>    
+    
     </h1>      
     
-    <div class='menu'>
+    <div class='menu' style='clear:both;padding-top:5px'>
         <a href='index.html'>Home</a>
         &middot;
         <a href='install.html'>Install</a>
@@ -35,8 +37,8 @@
     <h2>How it Works</h2>
 
 <p>
-In the simplest configuration, KalSMS only needs to be installed on one phone. 
-Suppose that you have installed KalSMS on an Android phone in Dar es Salaam, 
+In the simplest configuration, EnvayaSMS only needs to be installed on one phone. 
+Suppose that you have installed EnvayaSMS on an Android phone in Dar es Salaam, 
 Tanzania, with phone number <code>+255987654321</code> (local number <code>0987654321</code>), 
 with GSM service from Zantel.
 </p>
@@ -47,7 +49,7 @@ Suppose also that your web server is <code>example.com</code>, and its servers a
 
 <p>
 In Dar es Salaam, you would put the Android phone in an office with internet access and a Wi-Fi router,
-and connect the phone to the Wi-Fi network. (Wi-Fi is not strictly necessary, since KalSMS will also
+and connect the phone to the Wi-Fi network. (Wi-Fi is not strictly necessary, since EnvayaSMS will also
 work over the phone's mobile data connection, but Wi-Fi is likely to be more reliable and cheaper.)
 </p>
 
@@ -60,21 +62,21 @@ TODO
 </p>
 
 <p>
-    Typically your organization will need only one phone running KalSMS in a 
+    Typically your organization will need only one phone running EnvayaSMS in a 
     particular country. However, it is possible to use multiple phones to load-balance requests 
     for higher throughput, to offer different user services, or to serve different mobile networks.
 </p>
 
 <h3>Receiving incoming SMS and sending replies</h3>
 
-<p>Here is an example of how KalSMS would forward an incoming SMS to your server, and send a SMS back as a reply:</p>
+<p>Here is an example of how EnvayaSMS would forward an incoming SMS to your server, and send a SMS back as a reply:</p>
 
 <ol>
 <li>User in Tanzania, using Nokia phone with phone number <code>0555551234</code>, sends SMS message to <code>0987654321</code></li>
 <li>Your Android phone at <code>0987654321</code> receives SMS</li>
-<li>KalSMS sends SMS to <code>example.com</code> via HTTP</li>
+<li>EnvayaSMS sends SMS to <code>example.com</code> via HTTP</li>
 <li>example.com processes the message and returns SMS reply in HTTP response</li>
-<li>KalSMS forwards SMS reply to <code>0555551234</code></li>
+<li>EnvayaSMS forwards SMS reply to <code>0555551234</code></li>
 </ol>
 
 <p>
@@ -84,9 +86,9 @@ for sending one local SMS message, and your phone would also be charged for send
 
 <h3>Sending outgoing SMS notifications</h3>
 
-<p>KalSMS uses a different process to send SMS notifications that were not in response to an incoming message.</p>
+<p>EnvayaSMS uses a different process to send SMS notifications that were not in response to an incoming message.</p>
 
-<p>Assume now that <code>example.com</code> has multiple phones using KalSMS in different countries, 
+<p>Assume now that <code>example.com</code> has multiple phones using EnvayaSMS in different countries, 
 and it is configured to send all messages to phone numbers with a <code>255</code> prefix (Tanzania's country code) 
 via the cell phone with number <code>+255987654321</code>.
 
@@ -94,12 +96,12 @@ via the cell phone with number <code>+255987654321</code>.
     <li><code>example.com</code> wants to send an SMS message to <code>+255555551234</code></li>
     <li><code>example.com</code> identifies that the recipient number has a <code>255</code>
         prefix, and chooses sender phone number <code>+255987654321</code></li>
-    <li>The next time KalSMS polls <code>example.com</code> for queued outgoing messages 
+    <li>The next time EnvayaSMS polls <code>example.com</code> for queued outgoing messages 
         for its phone number <code>+255987654321</code>, the server responds with 
         the message to send
     </li>
-    <li>KalSMS forwards the message to <code>0555551234</code></li>
-    <li>KalSMS notifies <code>example.com</code> via HTTP that message was sent</li>
+    <li>EnvayaSMS forwards the message to <code>0555551234</code></li>
+    <li>EnvayaSMS notifies <code>example.com</code> via HTTP that message was sent</li>
     <li><code>example.com</code> removes the SMS message from its queue of outgoing messages.</li>
 </ol>
 
@@ -109,7 +111,7 @@ all SMS messages are sent domestically and are not charged as international SMS 
 </p>
     
     <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/youngj/KalSMS">youngj/KalSMS</a>
+      get the source code on GitHub : <a href="http://github.com/youngj/EnvayaSMS">youngj/EnvayaSMS</a>
     </div>
 
   </div>
