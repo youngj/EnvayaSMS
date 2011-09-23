@@ -1,6 +1,80 @@
 id: faq
 title: Frequently Asked Questions
 ---
+
+<h4>
+    Instead of implementing a SMS gateway as an Android app, why not use X instead? (where X = Twilio, Tropo, Clickatell, FrontlineSMS, RapidSMS, Kannel, etc.)
+</h4>
+
+<p> 
+    The existing alternative methods for creating SMS gateways can generally be categorized as
+    hosted services (e.g. Twilio, Tropo, Clickatell), connecting GSM phones/modems to a computer (e.g. FrontlineSMS, RapidSMS, Kannel),
+    and partnering directly with mobile operators.  
+</p>
+
+<p>
+    The table below summarizes the major benefits and drawbacks of each of these methods for creating an SMS gateway:
+</p>
+
+<table class='comparison_table'>
+    <thead> 
+    <tr>
+        <td>&nbsp;</td>
+        <th>Benefits</th>
+        <th>Drawbacks</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th>Hosted services</th>        
+        <td>
+            <ul><li>High message throughput
+            <li>Easy to deploy</ul>
+        </td>
+        <td>
+            <ul><li>No local numbers in many countries
+            <li>Usually no MMS support</ul>
+        </td>
+    </tr>
+    <tr>
+        <th>Connecting modem<br /> to computer</th>        
+        <td>
+            <ul><li>Can work with inexpensive phone</li></ul>
+        </td>
+        <td>
+            <ul><li>Expensive hardware costs
+            <li>Lots of moving parts to keep working
+            <li>Very difficult for non-technical users to deploy
+            <li>Low message throughput
+            <li>No MMS support</ul>
+        </td>
+    </tr>    
+    <tr>
+        <th>Partnering with<br />mobile operators</th>        
+        <td>
+            <ul>
+            <li>High message throughput
+            <li>Can provide free service to users via shortcode</ul>
+        </td>
+        <td>
+            <ul><li>Usually very expensive
+            <li>Requires operator approval
+            <li>Long setup time</li></ul>
+        </td>
+    </tr>      
+    </tbody>    
+</table>
+    
+<p>
+    EnvayaSMS is ideal for situations where no hosted services with local numbers are available in 
+    a particular country, or when it is necessary to receive MMS messages. 
+</p>
+<p>
+    EnvayaSMS likely has lower throughput than hosted services or partnering with mobile operators, but should 
+    be able to forward up to a few thousand messages per phone per day.
+</p>
+
+
 <h4>
 What phones are compatible with EnvayaSMS?
 </h4>
@@ -48,12 +122,12 @@ but anyone is welcome to contribute to improve it.
 
 <p>
 The source code for EnvayaSMS was originally based on <a href='https://github.com/niryariv/kalsms/'>KalSMS</a>, an open-source project 
-started by Nir Yariv in 2010 that introduced the idea of a simple SMS gateway implemented entirely as an Android app. 
+started by Nir Yariv in 2010. KalSMS introduced the idea of a simple SMS gateway implemented entirely as an Android app. 
 EnvayaSMS is a complete rewrite that shares little code with KalSMS.
 </p>
 
 <p>
-EnvayaSMS builds upon the idea of KalSMS by adding many new features that would be necessary for anyone deploying an SMS gateway in the field,
+EnvayaSMS builds upon the idea of KalSMS by adding many new features that are necessary when deploying an SMS gateway in the field,
 such as sending more than 100 messages per hour, authenticating the phone to the server, and retrying forwarding messages after transient errors.
 For a complete list of changes, see the <a href='/history/'>History</a> page. 
 </p>

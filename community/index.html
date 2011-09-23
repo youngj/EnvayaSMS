@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset='utf-8'>
-  <title>EnvayaSMS{% if entry.title %}: {{ entry.title }}{% endif %}</title>
+  <title>EnvayaSMS: Community</title>
   <link rel='stylesheet' type='text/css' href='/styles/site.css' />
 </head>
 
@@ -21,24 +21,38 @@
     </h1>      
     
     <div class='menu' style='clear:both;padding-top:5px'>
-        <a {% if entry.id == 'home' %}class='active'{% endif %} href='/'>Home</a>
+        <a  href='/'>Home</a>
         &middot;
-        <a {% if entry.id == 'install' %}class='active'{% endif %} href='/install/'>Install</a>
+        <a  href='/install/'>Install</a>
         &middot;
-        <a {% if entry.id == 'how' %}class='active'{% endif %} href='/how/'>How it Works</a>
+        <a  href='/how/'>How it Works</a>
         &middot;
-        <a {% if entry.id == 'serverapi' %}class='active'{% endif %} href='/serverapi/'>API Reference</a>
+        <a  href='/serverapi/'>API Reference</a>
         &middot;
-        <a {% if entry.id == 'faq' %}class='active'{% endif %} href='/faq/'>FAQ</a>        
+        <a  href='/faq/'>FAQ</a>        
         &middot;        
-        <a {% if entry.id == 'history' %}class='active'{% endif %} href='/history/'>History</a>                
+        <a  href='/history/'>History</a>                
         &middot;        
-        <a {% if entry.id == 'community' %}class='active'{% endif %} href='/community/'>Community</a>                
+        <a class='active' href='/community/'>Community</a>                
     </div>
     
-    <h2>{{ entry.title }}</h2>
+    <h2>Community</h2>
   
-    {{ content }}
+    
+<h4>Contribute to EnvayaSMS</h4>
+
+<p>
+To contribute to EnvayaSMS as a developer, just <a href='http://github.com/youngj/EnvayaSMS'>fork the project on github</a>, 
+work on your copy and send pull requests.
+</p>
+
+<h4>Email</h4>
+
+<p>
+To contact the EnvayaSMS developers, email <a href='sms-developers@envaya.org'>sms-developers@envaya.org</a>.
+</p>
+
+
     
     <div class="footer">
       get the source code on GitHub : <a href="http://github.com/youngj/EnvayaSMS">youngj/EnvayaSMS</a>

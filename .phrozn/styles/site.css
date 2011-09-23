@@ -81,3 +81,8 @@ a.button:hover
 {
     text-decoration:underline;
 }
+
+img
+{
+    border:0px;
+}
