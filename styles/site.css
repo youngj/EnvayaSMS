@@ -86,3 +86,18 @@ img
 {
     border:0px;
 }
+
+.faq_links li
+{
+    padding-bottom:5px;
+}
+
+.faq_links a
+{
+    text-decoration:none;
+}
+
+.faq_links a:hover
+{
+    text-decoration:underline;
+}

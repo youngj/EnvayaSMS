@@ -1,9 +1,29 @@
 id: faq
 title: Frequently Asked Questions
+q_alternative: Instead of implementing a SMS gateway as an Android app, why not use X instead? (where X = Twilio, Tropo, Clickatell, FrontlineSMS, RapidSMS, Kannel, etc.)
+q_phones: What phones are compatible with EnvayaSMS?
+q_envaya_org: What is the relationship between EnvayaSMS and envaya.org?
+q_kalsms: What is the relationship between EnvayaSMS and KalSMS?
+
 ---
 
-<h4>
-    Instead of implementing a SMS gateway as an Android app, why not use X instead? (where X = Twilio, Tropo, Clickatell, FrontlineSMS, RapidSMS, Kannel, etc.)
+<ul class='faq_links'>
+    <li>
+        <a href='#q_alternative'>{{ this.q_alternative }}</a>
+    </li>
+    <li>
+        <a href='#q_phones'>{{ this.q_phones }}</a>
+    </li>
+    <li>
+        <a href='#q_envaya_org'>{{ this.q_envaya_org }}</a>
+    </li>    
+    <li>
+        <a href='#q_kalsms'>{{ this.q_kalsms }}</a>
+    </li>        
+</ul>
+
+<h4 id='q_alternative'>
+    {{ this.q_alternative }}
 </h4>
 
 <p> 
@@ -75,9 +95,7 @@ title: Frequently Asked Questions
 </p>
 
 
-<h4>
-What phones are compatible with EnvayaSMS?
-</h4>
+<h4 id='q_phones'>{{ this.q_phones }}</h4>
 
 <p>
 EnvayaSMS should work on any phone with Android 1.6 (Donut) or higher. As of 9/23/2011, over 579 different phone models are compatible with EnvayaSMS.
@@ -102,7 +120,7 @@ In particular, you do not need to register for <a href='http://envaya.org'>envay
 For information about configuring a web server to connect to EnvayaSMS, see the <a href='serverapi.html'>API Reference</a> page.
 </p>
 
-<h4>What is the relationship between EnvayaSMS and envaya.org?</h4>
+<h4 id='q_envaya_org'>{{ this.q_envaya_org }}</h4>
 
 <p>
 We originally developed EnvayaSMS to enable civil society organizations in East Africa to interact with
@@ -118,7 +136,7 @@ Development of EnvayaSMS is currently led by the <a href='http://envaya.org'>env
 but anyone is welcome to contribute to improve it.
 </p>
 
-<h4>What is the relationship between EnvayaSMS and KalSMS?</h4>
+<h4 id='q_kalsms'>{{ this.q_kalsms }}</h4>
 
 <p>
 The source code for EnvayaSMS was originally based on <a href='https://github.com/niryariv/kalsms/'>KalSMS</a>, an open-source project 
