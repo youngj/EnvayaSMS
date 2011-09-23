@@ -5,6 +5,11 @@ body {
   color: #333;
 }
 
+a.active
+{
+    color: #333;
+}
+
 dt
 {
     font-family:monospace;
@@ -23,6 +28,11 @@ dd
 .menu a
 {
     text-decoration:none;
+}
+
+.menu a:hover
+{
+    text-decoration:underline;
 }
 
 .comparison_table

@@ -2,17 +2,17 @@
 <html>
 <head>
   <meta charset='utf-8'>
-  <title>EnvayaSMS</title>
-  <link rel='stylesheet' type='text/css' href='styles/site.css' />
+  <title>EnvayaSMS{% if entry.title %}: {{ entry.title }}{% endif %}</title>
+  <link rel='stylesheet' type='text/css' href='/styles/site.css' />
 </head>
 
 <body>
   <a href="http://github.com/youngj/EnvayaSMS"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
 
   <div id="container">
-
-    <a style='float:left' href="index.html"><img src='media/icon.png' height='72' width='72' style='margin-right:10px' /></a>
-    <h1 style='padding-top:13px'><a href="index.html">EnvayaSMS</a>
+ 
+    <a style='float:left' href="/"><img src='/media/icon.png' height='72' width='72' style='margin-right:10px' /></a>
+    <h1 style='padding-top:13px'><a href="/">EnvayaSMS</a>
     
     <span class="small">
       SMS gateway for Android
@@ -21,20 +21,22 @@
     </h1>      
     
     <div class='menu' style='clear:both;padding-top:5px'>
-        <a href='index.html'>Home</a>
+        <a {% if entry.id == 'home' %}class='active'{% endif %} href='/'>Home</a>
         &middot;
-        <a href='install.html'>Install</a>
+        <a {% if entry.id == 'install' %}class='active'{% endif %} href='/install/'>Install</a>
         &middot;
-        <a href='how.html'>How it Works</a>
+        <a {% if entry.id == 'how' %}class='active'{% endif %} href='/how/'>How it Works</a>
         &middot;
-        <a href='serverapi.html'>API Reference</a>
+        <a {% if entry.id == 'serverapi' %}class='active'{% endif %} href='/serverapi/'>API Reference</a>
         &middot;
-        <a href='comparison.html'>Comparison</a>        
+        <a {% if entry.id == 'comparison' %}class='active'{% endif %} href='/comparison/'>Comparison</a>        
         &middot;
-        <a href='faq.html'>FAQ</a>        
+        <a {% if entry.id == 'faq' %}class='active'{% endif %} href='/faq/'>FAQ</a>        
         &middot;        
-        <a href='history.html'>History</a>                
+        <a {% if entry.id == 'history' %}class='active'{% endif %} href='/history/'>History</a>                
     </div>
+    
+    <h2>{{ entry.title }}</h2>
   
     {{ content }}
     
