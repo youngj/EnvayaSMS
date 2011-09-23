@@ -16,3 +16,52 @@ EnvayaSMS has been tested and is known to work with the following phones:
 <li>LG GT540 Optimus</li>
 <li>Samsung Galaxy Mini S5570</li>
 </ul>
+
+<h4>Does EnvayaSMS use envaya.org's servers?</h4>
+
+<p>
+No. When using EnvayaSMS, you connect it to your own web server. 
+The EnvayaSMS Android app does not connect to <a href='http://envaya.org'>envaya.org</a> or any third-party servers. 
+In particular, you do not need to register for <a href='http://envaya.org'>envaya.org</a>.
+</p>
+
+<p>
+For information about configuring a web server to connect to EnvayaSMS, see the <a href='serverapi.html'>API Reference</a> page.
+</p>
+
+<h4>What is the relationship between EnvayaSMS and envaya.org?</h4>
+
+<p>
+We originally developed EnvayaSMS to enable civil society organizations in East Africa to interact with
+<a href='http://envaya.org'>envaya.org</a> via SMS and MMS, such as by posting news updates and photos
+to their website. 
+</p>
+<p>
+We realized that EnvayaSMS would be useful for any web service that needs to send and receive SMS/MMS, 
+and decided to make EnvayaSMS available for anyone building their own applications.
+</p>
+<p>
+Development of EnvayaSMS is currently led by the <a href='http://envaya.org'>envaya.org</a> team,
+but anyone is welcome to contribute to improve it.
+</p>
+
+<h4>What is the relationship between EnvayaSMS and KalSMS?</h4>
+
+<p>
+The source code for EnvayaSMS was originally based on <a href='https://github.com/niryariv/kalsms/'>KalSMS</a>, an open-source project 
+started by Nir Yariv in 2010 that introduced the idea of a simple SMS gateway implemented entirely as an Android app. 
+EnvayaSMS is a complete rewrite that shares little code with KalSMS.
+</p>
+
+<p>
+EnvayaSMS builds upon the idea of KalSMS by adding many new features that would be necessary for anyone deploying an SMS gateway in the field,
+such as sending more than 100 messages per hour, authenticating the phone to the server, and retrying forwarding messages after transient errors.
+For a complete list of changes, see the <a href='history.html'>History</a> page. 
+</p>
+<p>
+EnvayaSMS's server API is incompatible with that of KalSMS. Anyone switching from KalSMS to EnvayaSMS must 
+update their server to use the new API described on the <a href='serverapi.html'>API Reference</a> page.
+</p>
+<p>
+ As of 2011, KalSMS is no longer actively developed, and new development will occur on the EnvayaSMS project.
+</p>
