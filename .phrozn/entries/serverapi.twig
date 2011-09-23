@@ -24,14 +24,14 @@ HTTP Request Format
 <h4>Example requests</h4>
 
 <p>
-    In each of the example requests below, the Server URL is <code style='white-space:nowrap'>http://192.168.70.1:3000/sg/EnvayaSMS</code>
+    In each of the example requests below, the Server URL is <code style='white-space:nowrap'>http://192.168.70.1:3000/sg/app</code>
     and the phone number of the phone with EnvayaSMS is <code>16505551212</code>.
 </p>
 
 <p>An incoming SMS from <code>6505551234</code> with message body "test":</p>
 
 <pre>
-POST /sg/EnvayaSMS HTTP/1.1
+POST /sg/app HTTP/1.1
 X-Request-Signature: sAemG31uRllk/K9xck2WRNaF/WI=
 Content-Length: 96
 Content-Type: application/x-www-form-urlencoded
@@ -44,7 +44,7 @@ from=6505551234&message_type=sms&message=test&version=2&phone_number=16505551212
 <p>An incoming MMS message with an <code>image/jpeg</code> part and a <code>text/plain</code> part with message 'Test':</p>
 
 <pre style='white-space:pre-wrap'>
-POST /sg/EnvayaSMS HTTP/1.1
+POST /sg/app HTTP/1.1
 X-Request-Signature: OgpiQet9guVhEp+0klrONR8qGNs=
 Content-Length: 13087
 Content-Type: multipart/form-data; boundary=i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RGB6_wkjO
@@ -132,7 +132,7 @@ Content-Transfer-Encoding: binary
 <p>Checking for outgoing SMS messages:</p>
 
 <pre>
-POST /sg/EnvayaSMS HTTP/1.1
+POST /sg/app HTTP/1.1
 X-Request-Signature: 139CL71b7r1Zw/E2wcccWFviSlg=
 Content-Length: 50
 Content-Type: application/x-www-form-urlencoded
@@ -145,7 +145,7 @@ action=outgoing&version=2&phone_number=16505551212
 <p>Notifying the server of the status of a sent message:</p>
 
 <pre>
-POST /sg/EnvayaSMS HTTP/1.1
+POST /sg/app HTTP/1.1
 X-Request-Signature: 6uJtI6+QqlVBbUsR4T0WsQomods=
 Content-Length: 80
 Content-Type: application/x-www-form-urlencoded
