@@ -257,6 +257,7 @@ Additional parameters sent in POST requests with action=incoming:
     <dt>"message" ::= &lt;text&gt;</dt>
     <dd>
         The message body of the SMS, or the content of the <code>text/plain</code> part of the MMS.
+        For multipart SMS messages, this field contains all parts concatenated and may be longer than 160 characters.
     </dd>
 </dl>
         
@@ -396,7 +397,8 @@ The Content-Type header should be text/xml, with the content as follows:
         <dl>
         <dt>CDATA</dt>
         <dd>
-            The content of the SMS message to send.
+            The content of the SMS message to send. If the content is longer than the maximum size of a single SMS (typically 160 characters),
+            it will automatically be sent as a multipart SMS.
         </dd>
         </dl>
     </dd>
