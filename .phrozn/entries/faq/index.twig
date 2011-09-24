@@ -2,6 +2,7 @@ id: faq
 title: Frequently Asked Questions
 q_alternative: Instead of implementing a SMS gateway as an Android app, why not use X instead? (where X = Twilio, Tropo, Clickatell, FrontlineSMS, RapidSMS, Kannel, etc.)
 q_phones: What phones are compatible with EnvayaSMS?
+q_servers: Does EnvayaSMS use envaya.org's servers?
 q_envaya_org: What is the relationship between EnvayaSMS and envaya.org?
 q_kalsms: What is the difference between EnvayaSMS and KalSMS?
 q_smssync: What is the difference between EnvayaSMS and SMSSync?
@@ -15,6 +16,9 @@ q_smssync: What is the difference between EnvayaSMS and SMSSync?
     <li>
         <a href='#q_phones'>{{ this.q_phones }}</a>
     </li>
+    <li>
+        <a href='#q_servers'>{{ this.q_servers }}</a>
+    </li>    
     <li>
         <a href='#q_envaya_org'>{{ this.q_envaya_org }}</a>
     </li>    
@@ -112,7 +116,7 @@ EnvayaSMS has been tested and is known to work with the following phones:
 <li>Samsung Galaxy Mini S5570</li>
 </ul>
 
-<h4>Does EnvayaSMS use envaya.org's servers?</h4>
+<h4 id='q_servers'>{{ this.q_servers }}</h4>
 
 <p>
 No. When using EnvayaSMS, your phone connects to your own web server. 
