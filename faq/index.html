@@ -50,8 +50,11 @@
         <a href='#q_envaya_org'>What is the relationship between EnvayaSMS and envaya.org?</a>
     </li>    
     <li>
-        <a href='#q_kalsms'>What is the relationship between EnvayaSMS and KalSMS?</a>
+        <a href='#q_kalsms'>What is the difference between EnvayaSMS and KalSMS?</a>
     </li>        
+    <li>
+        <a href='#q_smssync'>What is the difference between EnvayaSMS and Ushahidi's SMSSync SMS Gateway?</a>
+    </li>          
 </ul>
 
 <h4 id='q_alternative'>
@@ -168,7 +171,7 @@ Development of EnvayaSMS is currently led by the <a href='http://envaya.org'>env
 but anyone is welcome to contribute to improve it.
 </p>
 
-<h4 id='q_kalsms'>What is the relationship between EnvayaSMS and KalSMS?</h4>
+<h4 id='q_kalsms'>What is the difference between EnvayaSMS and KalSMS?</h4>
 
 <p>
 The source code for EnvayaSMS was originally based on <a href='https://github.com/niryariv/kalsms/'>KalSMS</a>, an open-source project 
@@ -187,6 +190,17 @@ update their server to use the new API described on the <a href='/serverapi/'>AP
 </p>
 <p>
  As of 2011, KalSMS is no longer actively developed, and new development will occur on the EnvayaSMS project.
+</p>
+
+<h4 id='q_smssync'>What is the difference between EnvayaSMS and Ushahidi's SMSSync SMS Gateway?</h4>
+
+<p>
+<a href='http://smssync.ushahidi.com/'>SMSSync SMS Gateway</a> is an alternative Android SMS gateway app developed by Ushahidi. 
+</p>
+<p>
+EnvayaSMS contains several features not present in the current version of SMSSync, such as receiving MMS messages, 
+sending more than 100 outgoing SMS messages per hour, sending outgoing SMS notifications from the server 
+that were not in response to an incoming SMS, and notifying the server of the status of outgoing messages.
 </p>
     
     <div class="footer">

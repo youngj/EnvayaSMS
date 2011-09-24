@@ -3,7 +3,8 @@ title: Frequently Asked Questions
 q_alternative: Instead of implementing a SMS gateway as an Android app, why not use X instead? (where X = Twilio, Tropo, Clickatell, FrontlineSMS, RapidSMS, Kannel, etc.)
 q_phones: What phones are compatible with EnvayaSMS?
 q_envaya_org: What is the relationship between EnvayaSMS and envaya.org?
-q_kalsms: What is the relationship between EnvayaSMS and KalSMS?
+q_kalsms: What is the difference between EnvayaSMS and KalSMS?
+q_smssync: What is the difference between EnvayaSMS and Ushahidi's SMSSync SMS Gateway?
 
 ---
 
@@ -20,6 +21,9 @@ q_kalsms: What is the relationship between EnvayaSMS and KalSMS?
     <li>
         <a href='#q_kalsms'>{{ this.q_kalsms }}</a>
     </li>        
+    <li>
+        <a href='#q_smssync'>{{ this.q_smssync }}</a>
+    </li>          
 </ul>
 
 <h4 id='q_alternative'>
@@ -155,4 +159,15 @@ update their server to use the new API described on the <a href='/serverapi/'>AP
 </p>
 <p>
  As of 2011, KalSMS is no longer actively developed, and new development will occur on the EnvayaSMS project.
+</p>
+
+<h4 id='q_smssync'>{{ this.q_smssync }}</h4>
+
+<p>
+<a href='http://smssync.ushahidi.com/'>SMSSync SMS Gateway</a> is an alternative Android SMS gateway app developed by Ushahidi. 
+</p>
+<p>
+EnvayaSMS contains several features not present in the current version of SMSSync, such as receiving MMS messages, 
+sending more than 100 outgoing SMS messages per hour, sending outgoing SMS notifications from the server 
+that were not in response to an incoming SMS, and notifying the server of the status of outgoing messages.
 </p>
