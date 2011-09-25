@@ -279,7 +279,7 @@ The following HTTP Headers are sent in all POST requests from EnvayaSMS:
    </dd>
 </dl>
 
-Additional parameters sent in POST requests with action=incoming:
+Additional parameters sent in POST requests with <code>action=incoming</code>:
    
 <dl>
     <dt>"from" ::= &lt;text&gt;</dt>
@@ -299,7 +299,7 @@ Additional parameters sent in POST requests with action=incoming:
     </dd>
 </dl>
         
-Additional parameters sent in POST requests with action=incoming and message_type=mms:
+Additional parameters sent in POST requests with <code>action=incoming</code> and <code>message_type=mms</code>:
     
 <dl>
     <dt>"mms_parts" ::= &lt;json_array&gt;</dt>
@@ -338,7 +338,7 @@ Additional parameters sent in POST requests with action=incoming and message_typ
     </dt>
 </dl>
     
-Additional parameters sent in POST requests with action=outgoing:
+Additional parameters sent in POST requests with <code>action=outgoing</code>:
 
 <dl>
 <dt>
@@ -346,7 +346,7 @@ Additional parameters sent in POST requests with action=outgoing:
 </dt>
 </dl>
         
-Additional parameters sent in POST requests with action=send_status:
+Additional parameters sent in POST requests with <code>action=send_status</code>:
 
 <dl>
     <dt>"id" ::= &lt;text&gt;</dt>
@@ -395,7 +395,7 @@ Content-Length: 189
 
 Specification:
 <p>
-The Content-Type header should be text/xml, with the content as follows:
+The <code>Content-Type</code> header should be <code>text/xml</code>, with the content as follows:
 </p>
 <dl>
     <dt>&lt;messages&gt;</dt>
