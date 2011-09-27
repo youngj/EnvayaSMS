@@ -181,7 +181,7 @@ The following parameters are sent in all POST requests from EnvayaSMS:
         are running EnvayaSMS.
     </dd>
         
-    <dt>"action" ::= "outgoing" | "incoming" | "send_status"</dt>
+    <dt>"action" ::= "outgoing" | "incoming" | "send_status" | "test"</dt>
     <dd>
         The request action determines the purpose of the HTTP request:
         
@@ -195,12 +195,17 @@ The following parameters are sent in all POST requests from EnvayaSMS:
         <dd>
             Forward an incoming SMS or MMS message to the server
         </dd>
-            
-          
+                      
         <dt>"send_status":</dt>
         <dd>
             Update the server on the status of sending an outgoing message
         </dd>
+        
+        <dt>"test":</dt>
+        <dd>
+            Test the server connection.
+        </dd>            
+        
         </dl>        
             
         The other POST parameters sent depend on the request action.
