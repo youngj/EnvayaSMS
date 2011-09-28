@@ -434,6 +434,21 @@ The <code>Content-Type</code> header should be <code>text/xml</code>, with the c
                 action=incoming, it will be sent as a reply to the original
                 sender.
             </dd>
+            <dt>"priority" ::= &lt;integer&gt; (optional)</dt>
+            <dd>
+                The priority level of the outgoing message. If your server is sending outgoing messages
+                faster than the phone can send them out, the priority level allows you to specify 
+                the order to send them (e.g. so that you can send transactional SMS replies 
+                before asynchronous notifications).
+                <br />                
+                <br />
+                Larger integers represent higher priorities.
+                If omitted, the default priority level is 0.
+                <br />
+                <br />
+                Within a priority level, SMS messages are processed and sent in the order 
+                they were received from the server, and from top to bottom within the XML rsponse.
+            </dd>            
         </dl>
         <br />
         Content: 

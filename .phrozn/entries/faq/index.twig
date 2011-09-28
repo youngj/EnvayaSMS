@@ -109,17 +109,20 @@ q_smssync: What is the difference between EnvayaSMS and SMSSync?
 <h4 id='q_rate'>{{ this.q_rate }}</h4>
 
 <p>
-In our largest test so far, EnvayaSMS able to send 176 outgoing SMS messages in 9 minutes 50 seconds (using a LG 540 with T-Mobile).
+The rate at which EnvayaSMS can send messages depends on several factors, including your phone, your network, and the length of the SMS messages you're sending.
 </p>
 <p>
-This is equivalent to 1 message every 3.35 seconds, or slightly more than 1000 messages per hour assuming this rate is sustained.
+Using an LG 540 with T-Mobile, we were able to send 50 outgoing SMS messages (each 160 characters long)
+in 4 minutes 17 seconds, for an average of 1 message every 5.1 seconds (~12 messages/minute, ~700 messages/hour).
 </p>
 <p>
-Your rate may vary depending on your phone and network.
+In a different test, EnvayaSMS sent 176 outgoing SMS messages (with an average length of 7 characters) 
+in 9 minutes 50 seconds (using the same phone), for an average of 1 message every 3.4 seconds (~18 messages/minute, ~1100 messages/hour). 
 </p>
 <p>
 To increase the rate at which you can send SMS messages, you can install EnvayaSMS on multiple phones and
- balance outgoing SMS messages between them.
+ balance outgoing SMS messages between them. EnvayaSMS also allows you to set priority levels on outgoing SMS messages,
+ so important transactional messages can be delivered before low-priority notifications.
 </p>
 <p>
 In order to send more than 100 messages per hour with a single phone, it is necessary to install <a href='/install/#expansion'>EnvayaSMS Expansion Packs</a>.
