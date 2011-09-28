@@ -1,6 +1,7 @@
 id: faq
 title: Frequently Asked Questions
 q_alternative: Instead of implementing a SMS gateway as an Android app, why not use X instead? (where X = Twilio, Tropo, Clickatell, FrontlineSMS, RapidSMS, Kannel, etc.)
+q_rate: How fast can EnvayaSMS send SMS messages?
 q_phones: What phones are compatible with EnvayaSMS?
 q_servers: Does EnvayaSMS use envaya.org's servers?
 q_envaya_org: What is the relationship between EnvayaSMS and envaya.org?
@@ -13,6 +14,9 @@ q_smssync: What is the difference between EnvayaSMS and SMSSync?
     <li>
         <a href='#q_alternative'>{{ this.q_alternative }}</a>
     </li>
+    <li>
+        <a href='#q_rate'>{{ this.q_rate }}</a>
+    </li>    
     <li>
         <a href='#q_phones'>{{ this.q_phones }}</a>
     </li>
@@ -115,6 +119,21 @@ EnvayaSMS has been tested and is known to work with the following phones:
 <li>LG GT540 Optimus</li>
 <li>Samsung Galaxy Mini S5570</li>
 </ul>
+
+<h4 id='q_rate'>{{ this.q_rate }}</h4>
+
+<p>
+In our largest test so far, EnvayaSMS able to send 176 outgoing SMS messages in 9 minutes 50 seconds (using a LG 540 with T-Mobile).
+</p>
+<p>
+This is equivalent to 1 message every 3.35 seconds, or slightly more than 1000 messages per hour assuming this rate is sustained.
+</p>
+<p>
+Your rate may vary depending on your phone and network.
+</p>
+<p>
+In order to send more than 100 messages per hour, it is necessary to install <a href='/install/#expansion'>EnvayaSMS Expansion Packs</a>.
+</p>
 
 <h4 id='q_servers'>{{ this.q_servers }}</h4>
 
