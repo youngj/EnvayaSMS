@@ -264,6 +264,11 @@ Additional parameters sent in POST requests with <code>action=incoming</code>:
         The message body of the SMS, or the content of the <code>text/plain</code> part of the MMS.
         For multipart SMS messages, this field contains all parts concatenated and may be longer than 160 characters.
     </dd>
+    
+    <dt>"timestamp" ::= &lt;long integer&gt;</dt>
+    <dd>
+        The timestamp of the incoming message, in milliseconds since midnight, January 1, 1970 UTC.
+    </dd>    
 </dl>
         
 Additional parameters sent in POST requests with <code>action=incoming</code> and <code>message_type=mms</code>:
