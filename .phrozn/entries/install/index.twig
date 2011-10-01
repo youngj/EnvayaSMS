@@ -1,21 +1,26 @@
 id: install
 title: Installing EnvayaSMS
 ---
-Before installing EnvayaSMS, ensure that you have the following prerequisites:
+In order to install and deploy EnvayaSMS, you will need the following prerequisites:
 
 <ul>
-    <li>One or more Android phones (1.6 Donut or higher) that are
-    registered on a mobile network. </li>
+    <li>One or more Android phones (1.6 or higher),
+    registered on a mobile network
+    </li>
     <li>A way for the phones to connect to the internet, either via Wi-Fi
-    or the mobile data service. <br  />
+    or the mobile data service<br  />
     (Even if using Wi-Fi, mobile data 
     service is necessary to receive MMS messages.)    </li>
-    <li> A web server accessible from the public internet </li>
+    <li>A web server accessible from the public internet</li>
 </ul>
 
-Using an Android phone, open <a href='https://market.android.com/details?id=org.envaya.sms'>EnvayaSMS on Android Market</a> by clicking the link from your phone's browser, or scanning the barcode with a QR code app. Then, follow the steps shown below to install EnvayaSMS on your phone.<br />
+<p>
+Note: If you don't have these prerequisites yet, you can <a href='/test/'>test EnvayaSMS on your computer</a>.
+</p>
 
-<div style='float:left;padding-right:10px;padding-top:30px'>
+To install EnvayaSMS on an Android phone, open EnvayaSMS on Android Market by clicking the link below from your phone's browser, or scanning the barcode with a QR code app.<br />
+
+<div style='float:left;padding-right:10px;padding-top:20px'>
 <div style='font-size:16px;font-weight:bold; text-align:center'>
 <a href="https://market.android.com/details?id=org.envaya.sms">Open Android Market</a>
 </div>
@@ -25,7 +30,7 @@ Using an Android phone, open <a href='https://market.android.com/details?id=org.
 </div>
 
 <div style='float:left;padding-top:10px'>
-<img src='/media/screenshot-market.png' style='border:1px solid black' width='484' height='240' />
+<img src='/media/screenshot-market.png' style='border:1px solid black' width='440' height='218' />
 </div>
 
 <div style='clear:both;padding-top:10px'>
@@ -80,6 +85,9 @@ After your server is configured, configure EnvayaSMS on your phone to connect to
 <li><em>Recommended:</em> under Wi-Fi sleep policy, select "always stay connected".
     (Otherwise, EnvayaSMS will be unable to forward messages after the phone goes to sleep.)
 </li>
+<li><em>Optional:</em> enable Network Failover so that the phone will automatically switch 
+to mobile data if the Wi-Fi network stops working.
+</li>
 <li>Check "Enable EnvayaSMS"</li>
 <li>Click the Back button to return to the main screen</li>
 </ol>
@@ -93,8 +101,11 @@ then click "Test Connection".
 <p>
 <strong>Important:</strong> After EnvayaSMS is enabled, it will forward all SMS messages regardless of whether the
 EnvayaSMS app is open. If you want to use SMS normally again, return to EnvayaSMS' settings screen
-and uncheck "Enable EnvayaSMS". 
-</p>
+and uncheck "Enable EnvayaSMS".</p>
+
+<p>If you're testing EnvayaSMS with an Android phone that you're also using for normal communication, 
+you can enable "Test mode" on the settings screen so that EnvayaSMS only handles SMS messages
+from particular phone numbers.</p>
 
 <h3 id='expansion'>Installing Expansion Packs</h3>
 

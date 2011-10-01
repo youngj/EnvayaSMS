@@ -2,6 +2,7 @@ id: faq
 title: Frequently Asked Questions
 q_alternative: Instead of implementing a SMS gateway as an Android app, why not use X instead? (where X = Twilio, Tropo, Clickatell, FrontlineSMS, RapidSMS, Kannel, etc.)
 q_rate: How fast can EnvayaSMS send SMS messages?
+q_tunnel: EnvayaSMS can't connect to my dev server! What's wrong?
 q_phones: What phones are compatible with EnvayaSMS?
 q_servers: Does EnvayaSMS use envaya.org's servers?
 q_envaya_org: What is the relationship between EnvayaSMS and envaya.org?
@@ -16,6 +17,9 @@ q_smssync: What is the difference between EnvayaSMS and SMSSync?
     </li>
     <li>
         <a href='#q_rate'>{{ this.q_rate }}</a>
+    </li>    
+    <li>
+        <a href='#q_tunnel'>{{ this.q_tunnel }}</a>
     </li>    
     <li>
         <a href='#q_phones'>{{ this.q_phones }}</a>
@@ -127,6 +131,45 @@ To increase the rate at which you can send SMS messages, you can install EnvayaS
 <p>
 In order to send more than 100 messages per hour with a single phone, it is necessary to install <a href='/install/#expansion'>EnvayaSMS Expansion Packs</a>.
 </p>
+
+<h4 id='q_tunnel'>{{ this.q_tunnel }}</h4>
+
+<p>
+EnvayaSMS may be unable to connect to your development web server if it is blocked by a firewall on your computer,
+or if your computer has a IP address that's inaccessible from your phone's network.
+</p>
+
+<p>
+If your Android phone is on the same Wi-Fi network as your development web server, configure the firewall on 
+your development computer to allow incoming connections to your web server, then simply enter your computer's IP address 
+in EnvayaSMS as the Server URL.
+</p>
+<p>
+If you're testing with the phone's mobile data connection, or if your phone and development computer are on different
+Wi-Fi networks, the IP address of your development web server is likely inaccessible to the phone.
+</p>
+<p>
+To allow the phone to connect to your development computer, you can set up a reverse SSH tunnel between your 
+development computer and a server with a public IP address. 
+</p>
+<p>
+To set up a reverse SSH tunnel, you can either:
+
+<ul>
+    <li>use a hosted service like <a href='http://progrium.com/localtunnel/'>localtunnel</a>, or</li>
+    <li>use <code>ssh -R</code> to connect to your own server accessible from the public internet. For example:
+<pre>ssh -R 0.0.0.0:8765:localhost:80 [user]@[host]</pre>
+<p>
+This sets up port 8765 on <code>host</code> to forward to port 80 on your local development computer. 
+Then you can use <code>http://[host]:8765/</code> as the Server URL in EnvayaSMS, and it will be 
+forwarded to <code>http://localhost</code> on your development server.
+</p>
+<p>
+Note: In order for SSH port forwarding to work, you will need to set <code>GatewayPorts yes</code> in the <code>/etc/sshd_config</code> file
+on the public server.
+</p>
+</li>
+</ul>
 
 <h4 id='q_phones'>{{ this.q_phones }}</h4>
 

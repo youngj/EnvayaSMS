@@ -1,0 +1,46 @@
+id: test
+title: Testing EnvayaSMS
+---
+
+<p>
+<img src='/media/avd.png' width='242' height='227' style='float:right;padding-left:10px;' />
+If you don't yet have an Android phone, you can test EnvayaSMS in an emulated phone on your computer. 
+</p>
+<p>
+With this method, you can test EnvayaSMS for free
+and figure out if EnvayaSMS will work for your project
+without needing to get an actual phone or subscribe to mobile service.
+</p>
+<p>
+The following steps explain how to set up EnvayaSMS on an Android Virtual Device:
+</p>
+<ol>
+   <li>Install the <a href='http://developer.android.com/sdk/'>Android SDK</a> on your computer (where you are running a "dev" copy of your website)</li>
+   <li>Create a new Android Virtual Device with a target of Android 1.6 or higher. Specify a size for the SD card (necessary to download EnvayaSMS via the browser)</li>
+   <li>Start the virtual device</li>
+   <li>Open the Browser app and go to <a href='/install/'>sms.envaya.org/install</a></li>
+   <li>Click on the EnvayaSMS-release.apk link to download EnvayaSMS.<br />
+   <small>Note: Android Market does not work in the emulator.</small></li>
+   <li>Install EnvayaSMS</li>
+   <li>Configure EnvayaSMS with the settings of your development server. <br />
+   <small>Note: Do not enter <code>localhost</code> as the Server URL (since this would refer to the AVD itself). Instead, use your computer's IP address on the local network, as shown by the <code>ipconfig</code>
+   or <code>ifconfig</code> utilities.</small>
+   </li>
+    <li>
+        <img src='/media/telnet.png' width='216' height='85' style='float:right' />
+    To simulate incoming SMS on the emulator:
+        <ul>
+        <li>using telnet from your host computer, connect to <code>localhost:5554</code><br />
+        <small>Note: on Windows, you can install <a href='http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html'>puttytel</a>.</small>
+        </li>
+        <li>type <code>sms send [phonenumber] [text message]</code> to send messages to the emulator.<br/>
+        <small>Note: the emulator cannot receive MMS messages.</small>
+        </li>
+        </ul>
+    </li>    
+</ol>
+
+<p>
+Of course, you can also test EnvayaSMS by connecting a real Android phone to your development web server.
+For more information, see the <a href='/faq/#q_tunnel'>FAQ</a>.
+</p>
