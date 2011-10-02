@@ -66,11 +66,12 @@ The following steps explain how to set up EnvayaSMS on an Android Virtual Device
    <small>Note: Do not enter <code>localhost</code> as the Server URL (since this would refer to the AVD itself). Instead, use your computer's IP address on the local network, as shown by the <code>ipconfig</code>
    or <code>ifconfig</code> utilities.</small>
    </li>
-    <li>
-        <img src='/media/telnet.png' width='216' height='85' style='float:right' />
+    <li>        
     To simulate incoming SMS on the emulator:
         <ul>
-        <li>using telnet from your host computer, connect to <code>localhost:5554</code><br />
+        <li>
+        <img src='/media/telnet.png' width='226' height='95' style='float:right' />
+        using telnet from your host computer, connect to <code>localhost:5554</code><br />
         <small>Note: on Windows, you can install <a href='http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html'>puttytel</a>.</small>
         </li>
         <li>type <code>sms send [phonenumber] [text message]</code> to send messages to the emulator.<br/>
