@@ -81,6 +81,21 @@ The following steps explain how to set up EnvayaSMS on an Android Virtual Device
     </li>    
 </ol>
 
+<h3>EnvayaSMS Request Simulator</h3>
+<p>
+The <a href='https://raw.github.com/youngj/EnvayaSMS/master/server/php/example/www/test.html'>EnvayaSMS Request Simulator</a>
+is a standalone HTML file that allows you to simulate EnvayaSMS's HTTP requests entirely in your browser via JavaScript.
+</p>
+<p>
+This may be helpful when developing and testing your server implementation. For example, you could write automated
+tests in Selenium that use EnvayaSMS Request Simulator to make sure that your server implementation works correctly.
+</p>
+<p>
+To use EnvayaSMS Request Simulator, just copy the HTML file somewhere on your site, and open it in a web browser. 
+The URL of the EnvayaSMS Request Simulator must be on the same domain as the Server URL.
+</p>
+
+<h3>Using a Real Phone with a Development Server</h3>
 <p>
 Of course, you can also test EnvayaSMS by connecting a real Android phone to your development web server.
 For more information, see the <a href='/faq/#q_tunnel'>FAQ</a>.
