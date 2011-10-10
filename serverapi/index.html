@@ -241,7 +241,18 @@ The following parameters are sent in all POST requests from EnvayaSMS:
         are running EnvayaSMS.
     </dd>
         
-    <dt>"action" ::= "outgoing" | "incoming" | "send_status" | "test"</dt>
+    <dt>"log" ::= &lt;text&gt;</dt>
+    <dd>
+        Log messages printed to the EnvayaSMS console since the last successful HTTP request.
+        <br /><br />
+        You may wish to append this data to a log file to allow administrators 
+        to see error details without needing physical access to the phone.
+        <br /><br />
+        EnvayaSMS does not guarantee that the server receives log messages in order. Occasionally,
+        the server may receive the same log message multiple times.
+    </dd>
+        
+    <dt>"action" ::= "outgoing" | "incoming" | "send_status" | "device_status" | "test" </dt>
     <dd>
         The request action determines the purpose of the HTTP request:
         
@@ -261,10 +272,16 @@ The following parameters are sent in all POST requests from EnvayaSMS:
             Update the server on the status of sending an outgoing message
         </dd>
         
+        <dt>"device_status":</dt>
+        <dd>
+            Notify the server of a change in the Android device's state.
+        </dd>                    
+        
         <dt>"test":</dt>
         <dd>
             Test the server connection.
         </dd>            
+                
         
         </dl>        
             
@@ -399,6 +416,39 @@ Additional parameters sent in POST requests with <code>action=send_status</code>
         has been sent successfully.
     </dd>
 </dl>
+
+Additional parameters sent in POST requests with <code>action=device_status</code>:
+
+<dl>
+    <dt>"status" ::= "power_connected" | "power_disconnected" <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | "battery_low" | "battery_okay"</dt>
+    <dd>
+         This field describes a condition that has changed on the Android device.
+         
+        <dl>
+        <dt>"power_connected":</dt>
+        <dd>
+            The phone is now connected to external power.
+        </dd>
+        
+        <dt>"power_disconnected":</dt>
+        <dd>
+            This phone is no longer connected to external power.
+        </dd>
+                      
+        <dt>"battery_low":</dt>
+        <dd>
+            The phone's battery level has dropped below 15%.
+        </dd>
+        
+        <dt>"battery_okay":</dt>
+        <dd>
+            The phone's battery level is now at least 20% (after dropping below 15%).
+        </dd>                    
+        </dl>
+    </dd>
+</dl>
+
 
 <h3>
 HTTP Response Format
