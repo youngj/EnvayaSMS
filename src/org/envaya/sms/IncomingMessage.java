@@ -71,7 +71,7 @@ public abstract class IncomingMessage extends QueuedMessage {
             }
         }
         
-        return fromDigits >= 7;
+        return fromDigits >= 0;
     }
     
     public String getFrom()
