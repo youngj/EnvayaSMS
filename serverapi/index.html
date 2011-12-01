@@ -308,12 +308,12 @@ The following HTTP Headers are sent in all POST requests from EnvayaSMS:
             <li>Generate an input string by concatenating:
                 <ul>
                     <li>the server URL,</li>
-                    <li>each of the sorted POST parameters with their corresponding values, and</li>
+                    <li>each of the sorted POST parameters, in the format name=value for each name/value pair,</li>
                     <li>the password,</li>
                 </ul>
                 with a comma in between each element, like so:
                 <br />
-                <code>"&lt;serverURL&gt;,&lt;name1&gt;,&lt;value1&gt;,&lt;...&gt;,&lt;nameN&gt;,&lt;valueN&gt;,&lt;password&gt;"</code>
+                <code>"&lt;serverURL&gt;,&lt;name1&gt;=&lt;value1&gt;,&lt;...&gt;,&lt;nameN&gt;=&lt;valueN&gt;,&lt;password&gt;"</code>
             </li>
                                     
             <li>Generate the SHA-1 hash of the input string in UTF-8</li>
