@@ -233,7 +233,7 @@ The following parameters are sent in all POST requests from EnvayaSMS:
         
         <dt>"incoming":</dt>
         <dd>
-            Forward an incoming SMS or MMS message to the server
+            Forward an incoming message to the server (SMS, MMS, or call notification)
         </dd>
                       
         <dt>"send_status":</dt>
@@ -300,15 +300,16 @@ Additional parameters sent in POST requests with <code>action=incoming</code>:
         The phone number of the message sender.
     </dd>
         
-    <dt>"message_type" ::= "sms" | "mms"</dt>
+    <dt>"message_type" ::= "sms" | "mms" | "call"</dt>
     <dd>
-        Whether this message is an SMS or MMS.
+        Whether this message is a SMS, MMS, or a notification of an incoming call.
     </dd>
 
     <dt>"message" ::= &lt;text&gt;</dt>
     <dd>
         The message body of the SMS, or the content of the <code>text/plain</code> part of the MMS.
         For multipart SMS messages, this field contains all parts concatenated and may be longer than 160 characters.
+        (This field is empty for incoming call notifications.)
     </dd>
     
     <dt>"timestamp" ::= &lt;long integer&gt;</dt>
