@@ -87,13 +87,13 @@ HTTP Request Format
 <pre>
 POST /sg/app HTTP/1.1
 X-Request-Signature: sAemG31uRllk/K9xck2WRNaF/WI=
-Content-Length: 120
+Content-Length: 140
 Content-Type: application/x-www-form-urlencoded
 Host: 192.168.70.1:3000
 Connection: Keep-Alive
 
 from=6505551234&message_type=sms&message=test&version=2&phone_number=16505551212
-&action=incoming&timestamp=1317506831000
+&action=incoming&amp;age=23&amp;network=WIFI&amp;timestamp=1317506831000
 </pre>
 
 <p>An incoming MMS message with an <code>image/jpeg</code> part and a <code>text/plain</code> part with message 'Test':</p>
@@ -256,6 +256,11 @@ The following parameters are sent in all POST requests from EnvayaSMS:
         the server may receive the same log message multiple times.
     </dd>
         
+    <dt>"network" ::= &lt;text&gt;</dt>
+    <dd>
+        The phone's current type of internet connectivity. Typically this is either "MOBILE" or "WIFI".
+    </dd>
+        
     <dt>"action" ::= "outgoing" | "incoming" | "send_status" | "device_status" | "test" </dt>
     <dd>
         The request action determines the purpose of the HTTP request:
@@ -350,6 +355,12 @@ Additional parameters sent in POST requests with <code>action=incoming</code>:
     <dd>
         The timestamp of the incoming message, in milliseconds since midnight, January 1, 1970 UTC.
     </dd>    
+    
+    <dt>"age" ::= &lt;long integer&gt;</dt>
+    <dd>
+        The length of time between when the incoming message was received by the phone, and when the message was transmitted to the server, in milliseconds.
+    </dd>    
+    
 </dl>
         
 Additional parameters sent in POST requests with <code>action=incoming</code> and <code>message_type=mms</code>:
@@ -408,7 +419,7 @@ Additional parameters sent in POST requests with <code>action=send_status</code>
         of an <a href='#sms'>sms</a> tag in a previous XML response from the server).
     </dd>
 
-    <dt>"status" ::= "queued" | "failed" | "sent"</dt>
+    <dt>"status" ::= "queued" | "failed" | "cancelled" | "sent"</dt>
     <dd>
         The current status of the outgoing message.
     </dd>
@@ -449,6 +460,12 @@ Additional parameters sent in POST requests with <code>action=device_status</cod
         <dd>
             The phone's battery level is now at least 20% (after dropping below 15%).
         </dd>                    
+        
+        <dt>"send_limit_exceeded":</dt>
+        <dd>
+            EnvayaSMS is delaying sending outgoing messages because the rate limit for sending messages has been exceeded. (Installing additional expansion packs may be needed.)
+        </dd>                    
+        
         </dl>
     </dd>
 </dl>
@@ -460,8 +477,9 @@ HTTP Response Format
      
 <p>     
 For a successful request, the server should return HTTP status code 200.
-If the signature check failed, the server should return status code 403.
-Other status codes may be used to signify errors.
+Failed requests should return HTTP status codes between 400 and 499 inclusive.
+Failed requests may optionally return an error message to display in the phone logs, as
+a text/xml response like <code>&lt;response&gt;&lt;error&gt;...&lt;/error&gt;&lt;/response&gt;</code>
 </p>
     
 <h4>HTTP response for action=incoming and action=outgoing</h4>
@@ -470,13 +488,15 @@ Example:
 <pre>
 HTTP/1.1 200 OK
 Content-Type: text/xml
-Content-Length: 189
+Content-Length: 212
 
 &lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;response&gt;
 &lt;messages&gt;
   &lt;sms id='1540' to='16505551213'&gt;This is a test&lt;/sms&gt;
   &lt;sms id='1541' to='16505551214'&gt;This is a another test message.&lt;/sms&gt;
 &lt;/messages&gt;
+&lt;/response&gt;
 </pre>
 
 Specification:
@@ -484,9 +504,24 @@ Specification:
 The <code>Content-Type</code> header should be <code>text/xml</code>, with the content as follows:
 </p>
 <dl>
-    <dt>&lt;messages&gt;</dt>
+    <dt>&lt;response&gt;</dt>
     <dd>
         The root XML element.
+        <br /><br />
+        Content: 
+        <dl>
+            <dt>&lt;messages&gt; (optional if request successful)</dt>
+            <dd>The SMS messages to send.</dd>
+        </dl>
+        <dl>
+            <dt>&lt;error&gt; (optional if request failed)</dt>
+            <dd>An error message.</dd>
+        </dl>
+    </dd> 
+    
+    <dt>&lt;messages&gt;</dt>
+    <dd>
+        A container for the messages to send. 
         <br />
         <br />
         Attributes:
@@ -555,10 +590,10 @@ OK
 </pre>
 
 <p>
-    The response content for <code>send_status</code> requests is currently undefined and ignored.
     HTTP status code 200 signifies success, and anything else signifies failure.
+    The response content for successful <code>send_status</code> requests is currently ignored, except that    
+    requests with HTTP code 400-499 may return an error message as text/xml.
 </p>
-
     
     <div class="footer">
       get the source code on GitHub : <a href="http://github.com/youngj/EnvayaSMS">youngj/EnvayaSMS</a>
