@@ -42,12 +42,12 @@
     <h2>Server API Reference</h2>
   
     <p>
-EnvayaSMS communicates with the server via HTTP POST requests that expect an XML response.
+This page describes the application programming interface (API) between the EnvayaSMS app and your server. Deploying EnvayaSMS requires implementing a script on your server in accordance with this API.
 </p>
 
 <p>
 For convenience, EnvayaSMS includes <a href='https://github.com/youngj/EnvayaSMS/tree/master/server'>server libraries and example code</a>
- for certain languages to simplify handling its POST requests and generating response XML.  
+ for certain languages.
 </p>
 
 <p>
@@ -60,165 +60,56 @@ EnvayaSMS by implementing code in accordance with the API reference below.
 We encourage you to contribute new libraries and example code back to the EnvayaSMS project!
 </p>
 
-<h3>Testing Your Implementation</h3>
+<h3>Contents</h3>
+
+<ul>
+    <li><a href='/serverapi/#overview'>API Overview</a></li>
+    <li><a href='/serverapi/#actions'>HTTP Request Format (Actions)</a></li>
+    <li><a href='/serverapi/#events'>HTTP Response Format (Events)</a></li>
+    <li><a href='/serverapi/#errors'>HTTP Response Error Format</a></li>
+    <li><a href='/serverapi/#amqp'>AMQP Message Format</a></li>
+    <li><a href='/serverapi/#testing'>Testing Your Implementation</a></li>    
+</ul>
+
+<h3 id='overview'>API Overview</h3>
+
 <p>
-The <a href='https://raw.github.com/youngj/EnvayaSMS/master/server/php/example/www/test.html'>EnvayaSMS Request Simulator</a>
-is a standalone HTML file that allows you to simulate EnvayaSMS's HTTP requests entirely in your browser via JavaScript. 
+EnvayaSMS communicates with the server via HTTP POST requests, called <b>actions</b>. These actions include:
+</p>
+<ul>
+    <li>forwarding incoming messages to the server,</li>
+    <li>polling for outgoing messages,</li>
+    <li>notifying the server of the status of outgoing messages, and</li>
+    <li>notifying the server of a change in device status (such as battery level or power source).</li>
+</ul>    
+
+<p>
+All of these POST requests are made to the same URL (the "Server URL"), with data passed as normal POST parameters.
+Each POST request has an "action" parameter that tells the server which action is being performed.
 </p>
 
 <p>
-Just copy the HTML file somewhere on your site, and open it in a web browser. The URL of the EnvayaSMS Request Simulator 
-must be on the same domain as the Server URL.
+For each action sent by the phone, the server sends an HTTP response (as JSON). 
+If the action was successful, the response should contain zero or more <b>events</b>. Events include:
 </p>
-
-<h3>
-HTTP Request Format
-</h3>
-
-<h4>Example requests</h4>
+<ul>
+    <li>sending outgoing messages,</li>
+    <li>canceling outgoing messages that haven't been sent yet,</li>
+    <li>changing the settings for the EnvayaSMS app, and</li>
+    <li>displaying log messages in the EnvayaSMS app.</li>    
+</ul>
 
 <p>
-    In each of the example requests below, the Server URL is <code style='white-space:nowrap'>http://192.168.70.1:3000/sg/app</code>
-    and the phone number of the phone with EnvayaSMS is <code>16505551212</code>.
+Optionally, EnvayaSMS can also connect directly to an AMQP server (such as RabbitMQ). This allows your server to push outgoing messages to the phone in real-time,
+instead of requiring the phone to poll for messages at a fixed interval. Each message in AMQP queue is a single <em>event</em>, also encoded as JSON.
 </p>
 
-<p>An incoming SMS from <code>6505551234</code> with message body "test":</p>
+<p>
+(Note: Prior to version 3.0, the HTTP response format was XML. <a href='/serverapi/upgrade30.html'>See information on upgrading to version 3.0</a>.)
+</p>
 
-<pre>
-POST /sg/app HTTP/1.1
-X-Request-Signature: sAemG31uRllk/K9xck2WRNaF/WI=
-Content-Length: 140
-Content-Type: application/x-www-form-urlencoded
-Host: 192.168.70.1:3000
-Connection: Keep-Alive
+<h3 id='actions'>HTTP Request Format (Actions)</h3>
 
-from=6505551234&message_type=sms&message=test&version=2&phone_number=16505551212
-&action=incoming&amp;age=23&amp;network=WIFI&amp;timestamp=1317506831000
-</pre>
-
-<p>An incoming MMS message with an <code>image/jpeg</code> part and a <code>text/plain</code> part with message 'Test':</p>
-
-<pre style='white-space:pre-wrap'>
-POST /sg/app HTTP/1.1
-X-Request-Signature: OgpiQet9guVhEp+0klrONR8qGNs=
-Content-Length: 13087
-Content-Type: multipart/form-data; boundary=i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RG
-Host: 192.168.70.1:3000
-Connection: Keep-Alive
-
---i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RG
-Content-Disposition: form-data; name="from"
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-+16505551234
---i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RG
-Content-Disposition: form-data; name="timestamp"
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-1317506831000
---i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RG
-Content-Disposition: form-data; name="message"
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-Test
---i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RG
-Content-Disposition: form-data; name="message_type"
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-mms
---i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RG
-Content-Disposition: form-data; name="mms_parts"
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-[{"type":"application/smil","filename":"01smil","cid":"<0000>","name":"part0"},
-{"type":"text/plain","filename":"Text01.txt","cid":"<569>","name":"part1"},
-{"type":"image/jpeg","filename":"Image0001.jpg","cid":"<570>","name":"part2"}]
---i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RG
-Content-Disposition: form-data; name="version"
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-3
---i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RG
-Content-Disposition: form-data; name="phone_number"
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-16505551212
---i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RG
-Content-Disposition: form-data; name="action"
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-incoming
---i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RG
-Content-Disposition: form-data; name="part0"; filename="01smil"
-Content-Type: application/smil; charset=UTF-8
-Content-Transfer-Encoding: binary
-
-&lt;smil&gt;
-  &lt;head&gt;
-    &lt;layout&gt;
-      &lt;root-layout height="160" width="128"/&gt;
-      &lt;region fit="meet" height="70%" id="Image" left="0%" top="30%" width="100%"/&gt;
-      &lt;region fit="scroll" height="30%" id="Text" left="0%" top="0%" width="100%"/&gt;
-    &lt;/layout&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;par dur="8000ms"&gt;
-      &lt;text region="Text" src="cid:569"/&gt;
-      &lt;img region="Image" src="cid:570"/&gt;
-    &lt;/par&gt;
-  &lt;/body&gt;
-&lt;/smil&gt;
-
---i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RG
-Content-Disposition: form-data; name="part1"; filename="Text01.txt"
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: binary
-
-Test
---i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RG
-Content-Disposition: form-data; name="part2"; filename="Image0001.jpg"
-Content-Type: image/jpeg
-Content-Transfer-Encoding: binary
-
-<em>BINARY IMAGE DATA</em>
---i66xAht5IMn1Tfk7tL9DgY8ZHZxq0d0RG--
-</pre>
-
-<p>Checking for outgoing SMS messages:</p>
-
-<pre>
-POST /sg/app HTTP/1.1
-X-Request-Signature: 139CL71b7r1Zw/E2wcccWFviSlg=
-Content-Length: 50
-Content-Type: application/x-www-form-urlencoded
-Host: 192.168.70.1:3000
-Connection: Keep-Alive
-
-action=outgoing&version=2&phone_number=16505551212
-</pre>
-
-<p>Notifying the server of the status of a sent message:</p>
-
-<pre>
-POST /sg/app HTTP/1.1
-X-Request-Signature: 6uJtI6+QqlVBbUsR4T0WsQomods=
-Content-Length: 80
-Content-Type: application/x-www-form-urlencoded
-Host: 192.168.70.1:3000
-Connection: Keep-Alive
-
-id=1536&status=sent&error=&action=send_status&version=2&phone_number=16505551212
-</pre>
-
-<h4>Specification</h4>
 
 <p>
 The following parameters are sent in all POST requests from EnvayaSMS:
@@ -258,17 +149,42 @@ The following parameters are sent in all POST requests from EnvayaSMS:
         
     <dt>"network" ::= &lt;text&gt;</dt>
     <dd>
-        The phone's current type of internet connectivity. Typically this is either "MOBILE" or "WIFI".
+        The phone's current type of internet connectivity. Typically this is something like "MOBILE" or "WIFI".
     </dd>
+    
+    <dt>"settings_version" ::= &lt;integer&gt;</dt>
+    <dd>
+        The current value of the "settings_version" setting. 
+        (The server may optionally set this setting by pushing settings to the phone in a 'settings' event.)
+        <br /><br />
+        This allows the server to determine if it should push new settings to the phone, allowing 
+        you to manage and update the app settings remotely (i.e. without manually typing them into the app).
+    </dd>
+
+    <dt>"now" ::= &lt;long integer&gt;</dt>
+    <dd>
+        The current time in milliseconds since the Unix epoch at midnight, January 1, 1970 UTC, according to the phone's clock.
+    </dd>
+
+    <dt>"battery" ::= &lt;integer&gt;</dt>
+    <dd>
+        The current percentage of the phone's battery level, from 0 to 100.
+    </dd>
+
+    <dt>"power" ::= &lt;integer&gt;</dt>
+    <dd>
+        The current power source of the Android phone; 0=battery, 1=USB; 2=AC
+    </dd>    
         
-    <dt>"action" ::= "outgoing" | "incoming" | "send_status" | "device_status" | "test" </dt>
+    <dt>"action" ::= "outgoing" | "incoming" | "send_status" | "device_status" | "test" <br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| "amqp_started" | "forward_sent"</dt>
     <dd>
         The request action determines the purpose of the HTTP request:
         
         <dl>
         <dt>"outgoing":</dt>
         <dd>
-            Poll the server for outgoing messages
+            Poll the server for events (including, but not limited to, outgoing messages)
         </dd>
         
         <dt>"incoming":</dt>
@@ -291,7 +207,17 @@ The following parameters are sent in all POST requests from EnvayaSMS:
             Test the server connection.
         </dd>            
                 
-        
+        <dt>"amqp_started":</dt>
+        <dd>
+            The phone has established a real-time connection to an AMQP server.
+        </dd>            
+                
+        <dt>"forward_sent":</dt>
+        <dd>
+            Forwards a message to the server that was previously sent via the Android phone's
+            Messaging app.
+        </dd>                            
+                
         </dl>        
             
         The other POST parameters sent depend on the request action.
@@ -332,7 +258,7 @@ The following HTTP Headers are sent in all POST requests from EnvayaSMS:
    </dd>
 </dl>
 
-Additional parameters sent in POST requests with <code>action=incoming</code>:
+Additional parameters sent in POST requests with <b>action=incoming</b>:
    
 <dl>
     <dt>"from" ::= &lt;text&gt;</dt>
@@ -355,16 +281,11 @@ Additional parameters sent in POST requests with <code>action=incoming</code>:
     <dt>"timestamp" ::= &lt;long integer&gt;</dt>
     <dd>
         The timestamp of the incoming message, in milliseconds since midnight, January 1, 1970 UTC.
-    </dd>    
-    
-    <dt>"age" ::= &lt;long integer&gt;</dt>
-    <dd>
-        The length of time between when the incoming message was received by the phone, and when the message was transmitted to the server, in milliseconds.
-    </dd>    
+    </dd>        
     
 </dl>
         
-Additional parameters sent in POST requests with <code>action=incoming</code> and <code>message_type=mms</code>:
+Additional parameters sent in POST requests with <b>action=incoming and message_type=mms</b>:
     
 <dl>
     <dt>"mms_parts" ::= &lt;json_array&gt;</dt>
@@ -394,7 +315,8 @@ Additional parameters sent in POST requests with <code>action=incoming</code> an
         <dt>"filename" ::= &lt;text&gt;</dt>
         <dd>
             The filename of the MMS part, as sent by the sender phone, 
-            e.g. <code>"Image001.jpg"</code>.
+            e.g. <code>"Image001.jpg"</code>. 
+            In cases when the original filename is not available, this filename is a random string.
         </dt>
     </dl>
         
@@ -403,7 +325,7 @@ Additional parameters sent in POST requests with <code>action=incoming</code> an
     </dt>
 </dl>
     
-Additional parameters sent in POST requests with <code>action=outgoing</code>:
+Additional parameters sent in POST requests with <b>action=outgoing</b>:
 
 <dl>
 <dt>
@@ -411,7 +333,7 @@ Additional parameters sent in POST requests with <code>action=outgoing</code>:
 </dt>
 </dl>
         
-Additional parameters sent in POST requests with <code>action=send_status</code>:
+Additional parameters sent in POST requests with <b>action=send_status</b>:
 
 <dl>
     <dt>"id" ::= &lt;text&gt;</dt>
@@ -433,7 +355,7 @@ Additional parameters sent in POST requests with <code>action=send_status</code>
     </dd>
 </dl>
 
-Additional parameters sent in POST requests with <code>action=device_status</code>:
+Additional parameters sent in POST requests with <b>action=device_status</b>:
 
 <dl>
     <dt>"status" ::= "power_connected" | "power_disconnected" <br />
@@ -471,85 +393,131 @@ Additional parameters sent in POST requests with <code>action=device_status</cod
     </dd>
 </dl>
 
+Additional parameters sent in POST requests with <b>action=forward_sent</b>:
 
-<h3>
-HTTP Response Format
-</h4>
+<dl>
+    <dt>"to" ::= &lt;text&gt;</dt>
+    <dd>
+        The phone number that the message was sent to.
+    </dd>
+        
+    <dt>"message_type" ::= "sms"</dt>
+    <dd>
+        Currently only SMS messages are supported.
+    </dd>
+
+    <dt>"message" ::= &lt;text&gt;</dt>
+    <dd>
+        The message body of the SMS.
+    </dd>
+    
+    <dt>"timestamp" ::= &lt;long integer&gt;</dt>
+    <dd>
+        The timestamp of the outgoing message, in milliseconds since midnight, January 1, 1970 UTC.
+    </dd>            
+</dl>
+
+Additional parameters sent in POST requests with <b>action=amqp_started</b>:
+
+<dl>
+    <dt>"consumer_tag" ::= &lt;text&gt;</dt>
+    <dd>
+        The consumer tag of the AMQP connection.
+        <br />
+        <br />
+        The server can use this action to kick off old AMQP connections 
+        (that weren't closed properly) before their heartbeat timeout expires. 
+        With RabbitMQ, this can be done using the management API.       
+    </dd>
+</dl>
+
+<h3 id='events'>
+HTTP Response Format (Events)
+</h3>
      
 <p>     
-For a successful request, the server should return HTTP status code 200.
-Failed requests should return HTTP status codes between 400 and 499 inclusive.
-Failed requests may optionally return an error message to display in the phone logs, as
-a text/xml response like <code>&lt;response&gt;&lt;error&gt;...&lt;/error&gt;&lt;/response&gt;</code>
+In response to a successful HTTP request (i.e., action), the server should return HTTP status code 200, with an <code>application/json</code> content type.
 </p>
-    
-<h4>HTTP response for action=incoming and action=outgoing</h4>
 
-Example:
+<p>
+The response body should contain a JSON object with an <code>events</code> property, which is an array of events.
+Each event is a JSON object, containing one or more properties.</p>
+
+<p>
+For example, the following response contains one 'send' event that instructs EnvayaSMS to send one message:
+</p>
+
 <pre>
-HTTP/1.1 200 OK
-Content-Type: text/xml
-Content-Length: 212
-
-&lt;?xml version='1.0' encoding='UTF-8'?&gt;
-&lt;response&gt;
-&lt;messages&gt;
-  &lt;sms id='1540' to='16505551213'&gt;This is a test&lt;/sms&gt;
-  &lt;sms id='1541' to='16505551214'&gt;This is a another test message.&lt;/sms&gt;
-&lt;/messages&gt;
-&lt;/response&gt;
+{
+ "events":[{
+   "event":"send",
+   "messages":[{
+     "id":"4f7c9cea5e11b",
+     "to":"6507993371",
+     "message":"hello world'"
+   }]
+ }]
+}
 </pre>
 
-Specification:
 <p>
-The <code>Content-Type</code> header should be <code>text/xml</code>, with the content as follows:
+All events contain at least the following property:
 </p>
+
 <dl>
-    <dt>&lt;response&gt;</dt>
+    <dt>"event" ::= "send" | "cancel" | "cancel_all" | "log" | "settings"</dt>
     <dd>
-        The root XML element.
-        <br /><br />
-        Content: 
-        <dl>
-            <dt>&lt;messages&gt; (optional if request successful)</dt>
-            <dd>The SMS messages to send.</dd>
-        </dl>
-        <dl>
-            <dt>&lt;error&gt; (optional if request failed)</dt>
-            <dd>An error message.</dd>
-        </dl>
-    </dd> 
-    
-    <dt>&lt;messages&gt;</dt>
-    <dd>
-        A container for the messages to send. 
-        <br />
-        <br />
-        Attributes:
-        <dl><dt>none</dt></dl>
-        <br />
-        Content: 
-        <dl>
-            <dt>&lt;sms&gt;*</dt>
-            <dd>The SMS messages to send.</dd>
-        </dl>
+    This property determines the type of event:
+    <dl>
+        <dt>"send":</dt>
+        <dd>
+            Send one or more outgoing messages
+        </dd>
+        
+        <dt>"cancel":</dt>
+        <dd>
+            Attempt to cancel an outgoing message that has been queued.
+        </dd>
+                      
+        <dt>"cancel_all":</dt>
+        <dd>
+            Attempt to cancel all outgoing messages that have been queued.
+        </dd>
+        
+        <dt>"log":</dt>
+        <dd>
+            Display a message in the EnvayaSMS app log.
+        </dd>                    
+        
+        <dt>"settings":</dt>
+        <dd>
+            Update some of EnvayaSMS's settings.
+        </dd>            
+                
+        </dl>        
+
     </dd>
-    <dt id='sms'>&lt;sms&gt;</dt>
-    <dd>
-        Describes an outgoing SMS to send.
-        <br /><br />
-        Attributes:
+    
+</dl>
+
+Additional properties for <b>send</b> events:
+
+<dl>
+    <dt>"messages" ::= &lt;array&gt;</dt>
+    <dd>An array of messages to send. Each message is an object with the following properties:
         <dl>
-            <dt>"id" ::= &lt;text&gt; (optional)</dt>
+            <dt>"id" ::= &lt;string&gt; (optional)</dt>
             <dd>
                 An ID for this outgoing message. (EnvayaSMS will send this 
                 back to the server as the id field in a send_status request.)
             </dd>
-            <dt>"to" ::= &lt;text&gt; (optional for incoming, required for outgoing)</dt>
+            <dt>"to" ::= &lt;string&gt; (optional for incoming, required for outgoing)</dt>
             <dd>
-                The phone number to send the SMS to. If omitted for 
-                action=incoming, it will be sent as a reply to the original
-                sender.
+                The phone number to send the SMS to.
+                <br />
+                <br />
+                This may be omitted (null) if the event is sent as a response to action=incoming.
+                In this case, the message will be sent as a reply to the original sender.
             </dd>
             <dt>"priority" ::= &lt;integer&gt; (optional)</dt>
             <dd>
@@ -565,35 +533,107 @@ The <code>Content-Type</code> header should be <code>text/xml</code>, with the c
                 <br />
                 Within a priority level, SMS messages are processed and sent in the order 
                 they were received from the server, and from top to bottom within the XML rsponse.
-            </dd>            
-        </dl>
-        <br />
-        Content: 
-        <dl>
-        <dt>CDATA</dt>
-        <dd>
-            The content of the SMS message to send. If the content is longer than the maximum size of a single SMS (typically 160 characters),
-            it will automatically be sent as a multipart SMS.
-        </dd>
+            </dd>     
+            <dt>"message" ::= &lt;string&gt;</dt>
+            <dd>
+                The content of the SMS message to send. If the content is longer than the maximum size of a single SMS (typically 160 characters),
+                it will automatically be sent as a multipart SMS.
+            </dd>                        
         </dl>
     </dd>
 </dl>
+
+Additional properties for <b>cancel</b> events:
+
+<dl>
+    <dt>"id" ::= &lt;string&gt;</dt>
+    <dd>The ID of the message to cancel sending, previously sent via a "send" event.
+</dl>
+
+Additional properties for <b>cancel_all</b> events:
+
+<p>(None)</p>
+
+Additional properties for <b>log</b> events:
+
+<dl>
+    <dt>"message" ::= &lt;string&gt;</dt>
+    <dd>A string to display in the EnvayaSMS log.
+</dl>
+
+Additional properties for <b>settings</b> events:
+
+<dl>
+    <dt>"settings" ::= &lt;object&gt;</dt>
+    <dd><p>An object where each property name is the name of an EnvayaSMS setting, and each property's value is the new value for that setting.</p>
+        <p>The following settings are used within EnvayaSMS:</p>
         
-<h4>HTTP Response for action=send_status</h4>
+        <dl>
+            <dd>enabled ::= &lt;boolean&gt;</dd>            
+            <dd>server_url ::= &lt;string&gt;</dd>
+            <dd>phone_number ::= &lt;string&gt;</dd>
+            <dd>password ::= &lt;string&gt;</dd>
+            <dd>outgoing_interval ::= &lt;integer&gt;</dd>
+            <dd>keep_in_inbox ::= &lt;boolean&gt;</dd>
+            <dd>call_notifications ::= &lt;boolean&gt;</dd>
+            <dd>forward_sent ::= &lt;boolean&gt;</dd>
+            <dd>network_failover ::= &lt;boolean&gt;</dd>
+            <dd>test_mode ::= &lt;boolean&gt;</dd>
+            <dd>auto_add_test_number ::= &lt;boolean&gt;</dd>            
+            <dd>ignore_shortcodes ::= &lt;boolean&gt;</dd>            
+            <dd>ignore_non_numeric ::= &lt;boolean&gt;</dd>            
+            <dd>amqp_enabled ::= &lt;boolean&gt;</dd>
+            <dd>amqp_port ::= &lt;integer&gt;</dd>
+            <dd>amqp_vhost ::= &lt;integer&gt;</dd>
+            <dd>amqp_ssl ::= &lt;boolean&gt;</dd>
+            <dd>amqp_user ::= &lt;string&gt;</dd>
+            <dd>amqp_password ::= &lt;string&gt;</dd>
+            <dd>amqp_queue ::= &lt;string&gt;</dd>
+            <dd>amqp_heartbeat ::= &lt;integer&gt;</dd> 
+            <dd>market_version ::= &lt;integer&gt;</dd>            
+            <dd>market_version_name ::= &lt;string&gt;</dd>                                    
+            <dd>settings_version ::= &lt;integer&gt;</dd>            
+        </dl>
+    </dd>
+</dl>
 
-Example:
-<pre>
-HTTP/1.1 200 OK
-Content-Type: text/plain
-Content-Length: 2
-
-OK
-</pre>
+<h3 id='errors'>HTTP Response Error Format</h3>
 
 <p>
-    HTTP status code 200 signifies success, and anything else signifies failure.
-    The response content for successful <code>send_status</code> requests is currently ignored, except that    
-    requests with HTTP code 400-499 may return an error message as text/xml.
+If the phone's HTTP request failed for some reason, the server should return an appropriate HTTP error code (400-499 for client errors, 500-599 for server errors).
+</p>
+
+<p>
+To show a detailed error message in the EnvayaSMS app logs, set the content type as <code>application/json</code> and return a JSON object
+as the response body, like so:
+</p>
+<pre>
+{
+ "error":{
+  "message:"Your error message"
+ }
+}
+</pre>
+
+<h3 id='amqp'>
+AMQP Message Format
+</h3>
+
+<p>
+If you are using AMQP to push outgoing messages and other events to the phone in real time, the content type for each message
+should be <code>application/json</code> and the body of each message should be a serialized JSON object representing a single
+<em>event</em>, as defined in the <a href='/serverapi/#events'>preceding section</a>.
+</p>
+
+<h3 id='testing'>Testing Your Implementation</h3>
+<p>
+The <a href='https://raw.github.com/youngj/EnvayaSMS/master/server/php/example/www/test.html'>EnvayaSMS Request Simulator</a>
+is a standalone HTML file that allows you to simulate EnvayaSMS's HTTP requests entirely in your browser via JavaScript. 
+</p>
+
+<p>
+Just copy the HTML file somewhere on your site, and open it in a web browser. The URL of the EnvayaSMS Request Simulator 
+must be on the same domain as the Server URL.
 </p>
     
     <div class="footer">

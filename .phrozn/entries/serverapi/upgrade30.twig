@@ -1,0 +1,76 @@
+id: upgrade30
+title: Upgrading to EnvayaSMS 3.0
+---
+
+<p>
+In EnvayaSMS version 3.0, the default format of HTTP responses changed to JSON (from XML in version 2). 
+</p>
+<p>
+In version 2, the server was expected to different responses depending on the action -- 'incoming' and 'outgoing'
+actions returned an XML list of messages, while the response type for other actions was undefined.
+</p>
+<p>
+In version 3, this behavior has been simplified -- now the server is expected to return a JSON response for <em>all</em>
+actions. Each JSON response may contain a list of events. Optionally, users may configure AMQP to push events to the phone in real-time, 
+and each message in the AMQP queue represents a single event in the same JSON format.
+</p>
+<p>
+To support this new API, the PHP server library has been changed. For backwards compatibility, the PHP server library 
+will generate either XML or JSON responses depending on the version of the EnvayaSMS app. However, phones that use EnvayaSMS 
+version 2 with the XML interface will only be able to receive outgoing messages (EnvayaSMS_Event_Send), not other events
+added in version 3 (such as updating settings or canceling messages).
+</p>
+
+<p>
+When you upgrade to the new version of the PHP server library, you will also need
+to update your PHP code that uses the library. 
+</p>
+
+<p>The following code examples assume you have the following variables:
+<pre>
+$request = EnvayaSMS::get_request();
+$action = $request->get_action();
+</pre>
+
+<p>
+Updating your PHP code is straightforward:
+</p>
+
+<h3>Setting HTTP Response Header</h3>
+
+Old:
+<pre>header("Content-Type: text/xml");</pre>
+
+New:
+<pre>
+header("Content-Type: {$request->get_response_type()}");
+</pre>
+
+<h3>Sending Messages</h3>
+
+Old:
+<pre>$action->get_response_xml($messages);</pre>
+
+New:
+<pre>
+$request->render_response(array(
+     new EnvayaSMS_Event_Send($messages)
+));
+</pre>
+
+
+<h3>Returning an Error</h3>
+
+Old:
+<pre>EnvayaSMS::get_error_xml($error_message);</pre>
+
+New:
+<pre>$request->render_error_response($error_message);</pre>
+
+<h3>Returning an Empty Successful Response</h3>
+
+Old:
+<pre>EnvayaSMS::get_success_xml();</pre>
+
+New:
+<pre>$request->render_response();</pre>

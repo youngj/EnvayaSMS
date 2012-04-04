@@ -41,7 +41,42 @@
     
     <h2>History</h2>
   
-    Verson 2.0.5 (2012/03/15)
+    Verson 3.0 (2012/04/04)
+
+<ul>
+    <li>
+        Server can optionally push messages to phone in real-time using an AMQP server such as RabbitMQ (instead of polling). <a href='https://github.com/youngj/EnvayaSMS/blob/master/server/php/example/send_sms_amqp.php'>See example</a>
+    </li>
+    <li>
+        Pending messages are backed up to persistent storage on the phone, so they will be restored if the phone runs out of battery or the EnvayaSMS app crashes.
+    </li>
+    <li>
+        Allow forwarding previously saved MMS from the Messaging app inbox to the server.
+    </li>
+    <li>
+        Allow forwarding previously sent messages from the Messaging app to the server.
+    </li>
+    <li>    
+        Server can update the EnvayaSMS settings remotely (in addition to manually changing them in the app).
+    </li>
+    <li>
+        Server can cancel pending outgoing messages remotely (in addition to manually cancelling them in the app).
+    </li>
+    <li>
+        PHP server library interface changed. <a href='/serverapi/upgrade30.html'>See instructions for upgrading</a>
+    </li>
+    <li>
+        Simplified PHP example code.
+    </li>        
+    <li>
+        HTTP response format changed from XML to JSON. 
+    </li>
+    <li>
+        Test mode setting to automatically add recipients of outgoing messages.
+    </li>        
+</ul>
+
+Verson 2.0.5 (2012/03/15)
 
 <ul>
     <li>

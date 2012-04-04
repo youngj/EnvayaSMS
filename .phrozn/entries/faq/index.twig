@@ -4,6 +4,7 @@ q_alternative: Why not use X as an SMS gateway instead of an Android app? (where
 q_rate: How fast can EnvayaSMS send SMS messages?
 q_tunnel: EnvayaSMS can't connect to my dev server! What's wrong?
 q_phones: What phones are compatible with EnvayaSMS?
+q_battery: My battery life decreased when I use AMQP to send push notifications! What's wrong?
 q_servers: Does EnvayaSMS use envaya.org's servers?
 q_envaya_org: What is the relationship between EnvayaSMS and envaya.org?
 q_kalsms: What is the difference between EnvayaSMS and KalSMS?
@@ -23,6 +24,9 @@ q_smssync: What is the difference between EnvayaSMS and SMSSync?
     </li>    
     <li>
         <a href='#q_phones'>{{ this.q_phones }}</a>
+    </li>
+    <li>
+        <a href='#q_battery'>{{ this.q_battery }}</a>
     </li>
     <li>
         <a href='#q_servers'>{{ this.q_servers }}</a>
@@ -180,14 +184,11 @@ EnvayaSMS should work on any phone with Android 1.6 (Donut) or higher. As of 9/2
 EnvayaSMS has been tested and is known to work with the following phones:
 
 <ul>
-<li><a href="http://www.amazon.com/gp/product/B0041RSFT6/ref=as_li_ss_tl?ie=UTF8&tag=envaya-20&linkCode=as2&camp=217145&creative=399373&creativeASIN=B0041RSFT6">LG GT540 Optimus</a></li>
+<li><a href="http://www.amazon.com/gp/product/B0041RSFT6/ref=as_li_ss_tl?ie=UTF8&tag=envaya-20&linkCode=as2&camp=217145&creative=399373&creativeASIN=B0041RSFT6">LG GT540 Optimus (Android 2.1)</a></li>
+<li><a href="http://www.amazon.com/dp/B00607JBNO/ref=pe_175190_21431760_cs_sce_dp_1?tag=envaya-20">Samsung Exhibit II 4G (Android 2.3)</a> - note linked phone is locked to T-Mobile</li>
+<li><a href="http://prepaid-phones.t-mobile.com/prepaid-phone/LG-Optimus-T-Black-Prepaid">LG Optimus T (Android 2.2)</a> - note linked phone is locked to T-Mobile</li>
 <li><a href="http://www.amazon.com/gp/product/B004XRJELW/ref=as_li_ss_tl?ie=UTF8&tag=envaya-20&linkCode=as2&camp=217145&creative=399373&creativeASIN=B004XRJELW">Samsung Galaxy Mini S5570</a></li>
 </ul>
-
-<p>
-Note that if you purchase a phone from Amazon.com using the links above, 
-Trust for Conservation Innovation will receive 4% of the purchase price.
-</p>
 
 <h4 id='q_servers'>{{ this.q_servers }}</h4>
 
@@ -199,6 +200,18 @@ In particular, you do not need to register for <a href='http://envaya.org'>envay
 
 <p>
 For information about configuring a web server to connect to EnvayaSMS, see the <a href='/serverapi/'>API Reference</a> page.
+</p>
+
+<p>
+If you don't want to set up your own server, try <a href='http://telerivet.com'>Telerivet</a> instead, which makes it
+easy to deploy an SMS service without setting up your own server.
+</p>
+
+<h4 id='q_battery'>{{ this.q_battery }}</h4>
+
+<p>
+The AMQP heartbeat setting has a significant impact on battery life. (The phone's CPU will wake up for 5 seconds in order to send each heartbeat.)
+To increase the battery life, choose a longer AMQP heartbeat interval, such as 300 seconds.
 </p>
 
 <h4 id='q_envaya_org'>{{ this.q_envaya_org }}</h4>
