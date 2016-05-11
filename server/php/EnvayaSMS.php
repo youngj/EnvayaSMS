@@ -241,7 +241,7 @@ class EnvayaSMS_ActionRequest extends EnvayaSMS_Request
         
         $is_secure = (!empty($_SERVER['HTTPS']) AND filter_var($_SERVER['HTTPS'], FILTER_VALIDATE_BOOLEAN));
         $protocol = $is_secure ? 'https' : 'http';
-        $full_url = $protocol . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];    
+        $full_url = $_SERVER['HTTP_ORIGIN'] . $_SERVER['REQUEST_URI'];    
         
         $correct_signature = $this->compute_signature($full_url, $_POST, $correct_password);           
         
